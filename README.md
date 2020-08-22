@@ -3,7 +3,7 @@
  
  Simple, not optimized Discord Bot with various features, such as voting, idea management, Fun Command, Roles by Reaction, Authentication System and more.
 
-##Dependencies
+## Dependencies
 This Discord bot uses the following libraries:
 * [JDA (Java Discord API)](https://github.com/DV8FromTheWorld/JDA)
 * [Flyway](https://flywaydb.org/)
