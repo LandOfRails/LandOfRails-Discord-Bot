@@ -185,65 +185,65 @@ public class MessageListener extends ListenerAdapter {
                 } else {
                     channel.sendMessage("Du hast keine Berechtigung f\u00fcr diesen Befehl.").queue();
                 }
-            }
-
-            //Fun Commands
-            switch (messageTextRaw) {
-                case "!fish":
-                    event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/625373674286874665/628653269790490665/618747043854155776.gif").queue();
-                    break;
-                case "!bee":
-                    event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/494702234744127498/634442208291979285/aaaaaaaaaaa.gif").queue();
-                    break;
-                case "!duck":
-                    event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://i.gifer.com/XOsX.gif").queue();
-                    break;
-                case "!train":
-                    event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://cdn.discordapp.com/attachments/314814038662053888/712807142931038239/ezgif.com-video-to-gif_1.gif").queue();
-                    break;
-                case "!tram":
-                    switch (ThreadLocalRandom.current().nextInt(1, 3 + 1)) {
-                        case 1:
-                            event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media1.tenor.com/images/6ae61031c768f8e2980908bd1a67b850/tenor.gif?itemid=14228705").queue();
-                            break;
-                        case 2:
-                            event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.giphy.com/media/Tl2u4yXA90vQs/giphy.gif").queue();
-                            break;
-                        case 3:
-                            event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.giphy.com/media/80QxoQtZb4Gli/giphy.gif").queue();
-                            break;
-                        default:
-                            event.getChannel().sendMessage("Error Random Tram").queue();
-                            break;
-                    }
-                    break;
-                case "!cat":
-                    event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/669158942139613186/740009211391377432/45452.gif").queue();
-                    break;
-                case "!cat2":
-                    event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/730561686590717964/740596417390706788/5f2ac03410bd0496934562.gif").queue();
-                    break;
-                case "!fuck":
-                    event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://tenor.com/view/wtf-haha-flirty-fuck-smile-gif-15931510").queue();
-                    break;
-                default:
-                    //TODO Implement Databases
-                    if (!Container.CommandIdeas.exists()) {
-                        try {
-                            Container.CommandIdeas.createNewFile();
-                        } catch (final IOException e) {
+            } else {
+                //Fun Commands
+                switch (messageTextRaw) {
+                    case "!fish":
+                        event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/625373674286874665/628653269790490665/618747043854155776.gif").queue();
+                        break;
+                    case "!bee":
+                        event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/494702234744127498/634442208291979285/aaaaaaaaaaa.gif").queue();
+                        break;
+                    case "!duck":
+                        event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://i.gifer.com/XOsX.gif").queue();
+                        break;
+                    case "!train":
+                        event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://cdn.discordapp.com/attachments/314814038662053888/712807142931038239/ezgif.com-video-to-gif_1.gif").queue();
+                        break;
+                    case "!tram":
+                        switch (ThreadLocalRandom.current().nextInt(1, 3 + 1)) {
+                            case 1:
+                                event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media1.tenor.com/images/6ae61031c768f8e2980908bd1a67b850/tenor.gif?itemid=14228705").queue();
+                                break;
+                            case 2:
+                                event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.giphy.com/media/Tl2u4yXA90vQs/giphy.gif").queue();
+                                break;
+                            case 3:
+                                event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.giphy.com/media/80QxoQtZb4Gli/giphy.gif").queue();
+                                break;
+                            default:
+                                event.getChannel().sendMessage("Error Random Tram").queue();
+                                break;
+                        }
+                        break;
+                    case "!cat":
+                        event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/669158942139613186/740009211391377432/45452.gif").queue();
+                        break;
+                    case "!cat2":
+                        event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/730561686590717964/740596417390706788/5f2ac03410bd0496934562.gif").queue();
+                        break;
+                    case "!fuck":
+                        event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://tenor.com/view/wtf-haha-flirty-fuck-smile-gif-15931510").queue();
+                        break;
+                    default:
+                        //TODO Implement Databases
+                        if (!Container.CommandIdeas.exists()) {
+                            try {
+                                Container.CommandIdeas.createNewFile();
+                            } catch (final IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        try (FileWriter fw = new FileWriter(Container.CommandIdeas, true);
+                             BufferedWriter bw = new BufferedWriter(fw);
+                             PrintWriter out = new PrintWriter(bw)) {
+                            out.println(messageTextRaw);
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    }
-                    try (FileWriter fw = new FileWriter(Container.CommandIdeas, true);
-                         BufferedWriter bw = new BufferedWriter(fw);
-                         PrintWriter out = new PrintWriter(bw)) {
-                        out.println(messageTextRaw);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    event.getChannel().sendMessage("Diesen Befehl gibt es noch nicht. Er wurde zur Liste hinzugef\u00fcgt und wird vielelicht irgendwann mit eingebaut :)").queue();
-                    break;
+                        event.getChannel().sendMessage("Diesen Befehl gibt es noch nicht. Er wurde zur Liste hinzugef\u00fcgt und wird vielelicht irgendwann mit eingebaut :)").queue();
+                        break;
+                }
             }
 
             //Restart
