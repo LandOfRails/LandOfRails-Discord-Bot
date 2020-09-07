@@ -8,6 +8,12 @@ import storage.Container;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,6 +35,7 @@ public class MessageListener extends ListenerAdapter {
             MessageChannel channel = event.getChannel();
             TextChannel textChannel = event.getTextChannel();
             Member member = event.getMember();
+
 
             //Idea
             if (messageTextRaw.contains("idea")) {
@@ -83,7 +90,7 @@ public class MessageListener extends ListenerAdapter {
             }
 
             //Remove
-            if (messageTextRaw.contains("remove")) {
+            else if (messageTextRaw.contains("remove")) {
                 boolean isAllowed = false;
                 for (Role r : member.getRoles()) {
                     if (r.getId().equals("394112698511654912")) {
@@ -105,7 +112,7 @@ public class MessageListener extends ListenerAdapter {
             }
 
             //Abstimmung
-            if (messageTextRaw.contains("abstimmung")) {
+            else if (messageTextRaw.contains("abstimmung")) {
                 for (Role r : event.getMember().getRoles()) {
                     if (r.getId().equals("542380089124323359") || r.getId().equals("438074536508784640") || r.getId().equals("456916096587530241") || r.getId().equals("514172638717935635") || r.getId().equals("709848394725851211") || r.getId().equals("529727596942983187")) {
                         event.getMessage().delete().queue();
@@ -149,6 +156,37 @@ public class MessageListener extends ListenerAdapter {
                 }
             }
 
+            //AFK
+            else if (messageTextRaw.contains("!afk")) {
+
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDateTime now = LocalDateTime.now();
+
+                event.getChannel().sendMessage("Kommt noch...");
+                //TODO
+            }
+
+            //Info
+            else if (messageTextRaw.contains("!info") || messageTextRaw.contains("!landofrails") || messageTextRaw.contains("!lor")) {
+                event.getChannel().sendMessage("Wir sind LandOfRails! (Info kommt noch...)");
+            }
+
+            //Stop
+            else if (messageTextRaw.contains("stop")) {
+                boolean isAllowed = false;
+                for (Role r : member.getRoles()) {
+                    if (r.getId().equals("394112698511654912")) {
+                        isAllowed = true;
+                    }
+                }
+                if (isAllowed) {
+                    event.getJDA().shutdown();
+                    System.out.println("Der Bot wurde gestoppt.");
+                } else {
+                    channel.sendMessage("Du hast keine Berechtigung f\u00fcr diesen Befehl.").queue();
+                }
+            }
+
             //Fun Commands
             switch (messageTextRaw) {
                 case "!fish":
@@ -182,35 +220,30 @@ public class MessageListener extends ListenerAdapter {
                 case "!cat":
                     event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/669158942139613186/740009211391377432/45452.gif").queue();
                     break;
+                case "!cat2":
+                    event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://media.discordapp.net/attachments/730561686590717964/740596417390706788/5f2ac03410bd0496934562.gif").queue();
+                    break;
                 case "!fuck":
                     event.getGuild().getTextChannelById(532648338391040031L).sendMessage("https://tenor.com/view/wtf-haha-flirty-fuck-smile-gif-15931510").queue();
                     break;
                 default:
-                    //TODO
-                    
-                    event.getChannel().sendMessage("Diesen Befehl gibt es noch nicht. Er wurde zur Liste hinzugefügt und wird vielelicht irgendwann mit eingebaut :)").queue();
-                    break;
-            }
-
-            //Info
-            if (messageTextRaw.contains("!info")) {
-                event.getChannel().sendMessage("Wir sind LandOfRails! (Info kommt noch...)");
-            }
-
-            //Stop
-            if (messageTextRaw.contains("stop")) {
-                boolean isAllowed = false;
-                for (Role r : member.getRoles()) {
-                    if (r.getId().equals("394112698511654912")) {
-                        isAllowed = true;
+                    //TODO Implement Databases
+                    if (!Container.CommandIdeas.exists()) {
+                        try {
+                            Container.CommandIdeas.createNewFile();
+                        } catch (final IOException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-                if (isAllowed) {
-                    event.getJDA().shutdown();
-                    System.out.println("Der Bot wurde gestoppt.");
-                } else {
-                    channel.sendMessage("Du hast keine Berechtigung f\u00fcr diesen Befehl.").queue();
-                }
+                    try (FileWriter fw = new FileWriter(Container.CommandIdeas, true);
+                         BufferedWriter bw = new BufferedWriter(fw);
+                         PrintWriter out = new PrintWriter(bw)) {
+                        out.println(messageTextRaw);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    event.getChannel().sendMessage("Diesen Befehl gibt es noch nicht. Er wurde zur Liste hinzugef\u00fcgt und wird vielelicht irgendwann mit eingebaut :)").queue();
+                    break;
             }
 
             //Restart

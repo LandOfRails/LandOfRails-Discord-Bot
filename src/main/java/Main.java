@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.flywaydb.core.Flyway;
 import storage.Container;
 
 import javax.annotation.Nonnull;
@@ -50,8 +49,8 @@ public class Main implements EventListener {
         builder.build();
 
         //Flyway (Databases)
-        Flyway flyway = Flyway.configure().dataSource("landofrails.net", "discord-bot", sensitiveDataSplitted[1]).load();
-        flyway.migrate();
+        //Flyway flyway = Flyway.configure().dataSource("landofrails.net", "discord-bot", sensitiveDataSplitted[1]).load();
+        //flyway.migrate();
 
         //TimerTasks starten
         TimerTasks tt = new TimerTasks();
