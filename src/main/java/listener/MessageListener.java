@@ -185,6 +185,51 @@ public class MessageListener extends ListenerAdapter {
                 } else {
                     channel.sendMessage("Du hast keine Berechtigung f\u00fcr diesen Befehl.").queue();
                 }
+            } else if(messageTextRaw.contains("!commands") || messageTextRaw.contains("!help")) {
+                boolean isOwner = false;
+                boolean canStartPoll = false;
+                for (Role r : member.getRoles()) {
+                    if (r.getId().equals("394112698511654912")) {
+                        isOwner = true;
+                    }
+                    if (r.getId().equals("542380089124323359") || r.getId().equals("438074536508784640") || r.getId().equals("456916096587530241") || r.getId().equals("514172638717935635") || r.getId().equals("709848394725851211") || r.getId().equals("529727596942983187")) {
+                        canStartPoll = true;
+                    }
+                }
+
+                final EmbedBuilder helpEmbed = new EmbedBuilder();
+                helpEmbed.setColor(Color.RED);
+                helpEmbed.setTitle("LandOfRails Hilfeseite");
+                helpEmbed.setDescription("Alle Commands des LandOfRails Discord Bots.");
+                helpEmbed.addBlankField(false);
+                helpEmbed.addField("Generelle Commands:","",false);
+                helpEmbed.addField("!idea [all|tc|znd|ir|rtm] <message>", "Sendet eine Idee für unsere Server ein :)", true);
+                helpEmbed.addField("!afk", "WIP", true);
+                helpEmbed.addField("!info", "Info zum LandOfRails Server (WIP)", true);
+                helpEmbed.addField("!help", "Diese Hilfeseite :)", true);
+                helpEmbed.addField("Fun Commands:","",false);
+                helpEmbed.addField("!fish", "Fish GIF", true);
+                helpEmbed.addField("!bee", "Minecraft Biene", true);
+                helpEmbed.addField("!duck", "Enten GIF", true);
+                helpEmbed.addField("!train", "Bahn GIF", true);
+                helpEmbed.addField("!tram", "Eins von 3 Straßenbahn GIF's", true);
+                helpEmbed.addField("!cat[2]", "Katzen GIF", true);
+                helpEmbed.addField("!fuck", "Cursed.", true);
+
+                if(isOwner)  {
+                    helpEmbed.addBlankField(false);
+                    helpEmbed.addField("Owner Commands:","", false);
+                    helpEmbed.addField("!remove [anzahl]", "Lösche [anzahl] Nachrichten", true);
+                    helpEmbed.addField("stop", "Stoppe den Bot", true);
+                }
+
+                /*if(canStartPoll) {
+                                helpEmbed.addBlankField(false);
+                    helpEmbed.addField("Poll Command(s):", "", false);
+                    helpEmbed.addField("abstimmung", "Keine ahnung wie der krams geht lul", true); // @MarkenJaden Musst du machen
+                }*/
+
+                channel.sendMessage(helpEmbed.build()).queue();
             } else {
                 //Fun Commands
                 switch (messageTextRaw) {
