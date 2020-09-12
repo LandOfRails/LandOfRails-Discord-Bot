@@ -185,7 +185,7 @@ public class MessageListener extends ListenerAdapter {
                 } else {
                     channel.sendMessage("Du hast keine Berechtigung f\u00fcr diesen Befehl.").queue();
                 }
-            } else if(messageTextRaw.contains("!commands") || messageTextRaw.contains("!help")) {
+            } else if (messageTextRaw.contains("!commands") || messageTextRaw.contains("!help") || messageTextRaw.contains("!hilfe")) {
                 boolean isOwner = false;
                 boolean canStartPoll = false;
                 for (Role r : member.getRoles()) {
@@ -199,28 +199,28 @@ public class MessageListener extends ListenerAdapter {
 
                 final EmbedBuilder helpEmbed = new EmbedBuilder();
                 helpEmbed.setColor(Color.RED);
-                helpEmbed.setTitle("LandOfRails Hilfeseite");
-                helpEmbed.setDescription("Alle Commands des LandOfRails Discord Bots.");
+                helpEmbed.setTitle("LandOfRails Help page");
+                helpEmbed.setDescription("All commands of the LandOfRails discord bot.");
                 helpEmbed.addBlankField(false);
-                helpEmbed.addField("Generelle Commands:","",false);
-                helpEmbed.addField("!idea [all|tc|znd|ir|rtm] <message>", "Sendet eine Idee für unsere Server ein :)", true);
-                helpEmbed.addField("!afk", "WIP", true);
-                helpEmbed.addField("!info", "Info zum LandOfRails Server (WIP)", true);
-                helpEmbed.addField("!help", "Diese Hilfeseite :)", true);
-                helpEmbed.addField("Fun Commands:","",false);
+                helpEmbed.addField("General commands:", "", false);
+                helpEmbed.addField("!idea [all|tc|znd|ir|rtm] <message>", "Submit an idea for our servers :)", true);
+                helpEmbed.addField("!afk", "Work in progress", true);
+                helpEmbed.addField("!info", "About the LandOfRails Server (WIP)", true);
+                helpEmbed.addField("!help", "This help page :)", true);
+                helpEmbed.addField("Fun Commands:", "", false);
                 helpEmbed.addField("!fish", "Fish GIF", true);
-                helpEmbed.addField("!bee", "Minecraft Biene", true);
-                helpEmbed.addField("!duck", "Enten GIF", true);
-                helpEmbed.addField("!train", "Bahn GIF", true);
-                helpEmbed.addField("!tram", "Eins von 3 Straßenbahn GIF's", true);
-                helpEmbed.addField("!cat[2]", "Katzen GIF", true);
+                helpEmbed.addField("!bee", "Minecraft bee", true);
+                helpEmbed.addField("!duck", "Duck GIF", true);
+                helpEmbed.addField("!train", "Railroad GIF", true);
+                helpEmbed.addField("!tram", "One of 3 Tram GIF's", true);
+                helpEmbed.addField("!cat[2]", "Cat GIF", true);
                 helpEmbed.addField("!fuck", "Cursed.", true);
 
-                if(isOwner)  {
+                if (isOwner) {
                     helpEmbed.addBlankField(false);
-                    helpEmbed.addField("Owner Commands:","", false);
-                    helpEmbed.addField("!remove [anzahl]", "Lösche [anzahl] Nachrichten", true);
-                    helpEmbed.addField("stop", "Stoppe den Bot", true);
+                    helpEmbed.addField("Owner Commands:", "", false);
+                    helpEmbed.addField("!remove [anzahl]", "L\u00f6sche [anzahl] Nachrichten", true);
+                    helpEmbed.addField("!stop", "Stoppe den Bot", true);
                 }
 
                 /*if(canStartPoll) {
