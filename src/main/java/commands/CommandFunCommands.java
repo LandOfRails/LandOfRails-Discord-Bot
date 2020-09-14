@@ -29,13 +29,12 @@ public class CommandFunCommands implements Command, Aliases {
 
 	@Override
 	public String[] getAliases() {
-		return map.keySet().toArray(new String[] {});
+		return new String[] { "fish", "bee", "duck", "train", "tram", "cat", "cat2", "fuck" };
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "fish";
 	}
 
 	@Override
@@ -45,9 +44,10 @@ public class CommandFunCommands implements Command, Aliases {
 		refreshMap();
 
 		String messageTextRaw = event.getMessage().getContentRaw();
+		String cmd = messageTextRaw.substring(1);
 
 		for (Entry<String, String> entry : map.entrySet()) {
-			if (messageTextRaw.startsWith(entry.getKey()))
+			if (cmd.startsWith(entry.getKey()))
 				event.getGuild().getTextChannelById(532648338391040031L).sendMessage(entry.getValue()).queue();
 		}
 

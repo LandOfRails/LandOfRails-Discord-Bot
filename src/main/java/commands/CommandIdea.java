@@ -10,7 +10,7 @@ public class CommandIdea implements Command {
 
 	@Override
 	public String getName() {
-		return "all";
+		return "idea";
 	}
 
 	@Override

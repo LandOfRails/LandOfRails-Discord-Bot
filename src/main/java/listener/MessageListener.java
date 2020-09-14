@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
@@ -17,6 +18,7 @@ import storage.Container;
 
 public class MessageListener extends ListenerAdapter {
 
+	private static final Logger logger = Logger.getLogger("MessageListener");
 	private CommandList commandList = new CommandList();
 	public static final String COMMANDPREFIX = "!";
 
@@ -39,6 +41,9 @@ public class MessageListener extends ListenerAdapter {
 			String cmd = messageTextRaw.substring(1);
 			boolean called = false;
 			for (Command c : commandList.getCommands()) {
+				logger.severe("c null? " + (c == null));
+				logger.severe("c.getName() null? " + (c.getName() == null));
+				logger.severe("cmd null? " + (cmd == null));
 				if (cmd.startsWith(c.getName())) {
 					c.onCall(event);
 					called = true;

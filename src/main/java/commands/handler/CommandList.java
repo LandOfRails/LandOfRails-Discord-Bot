@@ -11,6 +11,7 @@ import commands.CommandIdea;
 import commands.CommandInfo;
 import commands.CommandRemove;
 import commands.CommandStop;
+import commands.CommandTest;
 import commands.interfaces.Command;
 
 public class CommandList {
@@ -26,6 +27,7 @@ public class CommandList {
 		commands.add(new CommandInfo());
 		commands.add(new CommandRemove());
 		commands.add(new CommandStop());
+		commands.add(new CommandTest());
 	}
 
 	public List<Command> getCommands() {

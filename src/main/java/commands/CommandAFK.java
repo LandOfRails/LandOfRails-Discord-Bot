@@ -19,7 +19,8 @@ public class CommandAFK implements Command {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDateTime now = LocalDateTime.now();
 
-		event.getChannel().sendMessage("Kommt noch...");
+		event.getChannel().sendMessage("[WIP] Kommt demnächst..").queue();
+
 		// TODO
 	}
 
