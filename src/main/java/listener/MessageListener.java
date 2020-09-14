@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
@@ -18,7 +17,7 @@ import storage.Container;
 
 public class MessageListener extends ListenerAdapter {
 
-	private static final Logger logger = Logger.getLogger("MessageListener");
+	// private static final Logger logger = Logger.getLogger("MessageListener");
 	private CommandList commandList = new CommandList();
 	public static final String COMMANDPREFIX = "!";
 
