@@ -47,7 +47,7 @@ public class CommandFunCommands implements Command, Aliases {
 		String cmd = messageTextRaw.substring(1);
 
 		for (Entry<String, String> entry : map.entrySet()) {
-			if (cmd.matches("^" + entry.getKey() + "(\\s|$)"))
+			if (cmd.matches("^" + entry.getKey() + "(\\s.*|$)"))
 				event.getGuild().getTextChannelById(532648338391040031L).sendMessage(entry.getValue()).queue();
 		}
 

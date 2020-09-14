@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
@@ -18,7 +17,7 @@ import storage.Container;
 
 public class MessageListener extends ListenerAdapter {
 
-	private static final Logger logger = Logger.getLogger("MessageListener");
+	// private static final Logger logger = Logger.getLogger("MessageListener");
 	private CommandList commandList = new CommandList();
 	public static final String COMMANDPREFIX = "!";
 
@@ -41,7 +40,7 @@ public class MessageListener extends ListenerAdapter {
 			String cmd = messageTextRaw.substring(1);
 			boolean called = false;
 			for (Command c : commandList.getCommands()) {
-				if (cmd.matches("^" + c.getName() + "(\\s|$)")) {
+				if (cmd.matches("^" + c.getName() + "(\\s.*|$)")) {
 					c.onCall(event);
 					called = true;
 				} else if (c instanceof Aliases) {
@@ -97,7 +96,7 @@ public class MessageListener extends ListenerAdapter {
 
 	private boolean startsWith(String target, String[] array) {
 		for (String s : array) {
-			if (target.matches("^" + s + "(\\s|$)"))
+			if (target.matches("^" + s + "(\\s.*|$)"))
 				return true;
 		}
 		return false;

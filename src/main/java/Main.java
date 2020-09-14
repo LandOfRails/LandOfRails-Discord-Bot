@@ -11,7 +11,6 @@ import listener.MessageListener;
 import listener.ReactionListener;
 import listener.ServerListener;
 import listener.StartStopListener;
-import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.GenericEvent;
@@ -23,10 +22,8 @@ public class Main implements EventListener {
 	private static Logger logger = Logger.getLogger("Main");
 
 	public static void main(String[] args) throws LoginException {
-		JDABuilder builder = new JDABuilder(AccountType.BOT);
 		String sensitiveData = "";
-		try {
-			final Scanner s = new Scanner(Container.SensitiveDataFile);
+		try (Scanner s = new Scanner(Container.SensitiveDataFile);) {
 			while (s.hasNext()) {
 				sensitiveData = sensitiveData + s.next() + " ";
 			}
@@ -36,7 +33,7 @@ public class Main implements EventListener {
 		String[] sensitiveDataSplitted = sensitiveData.split(" ");
 
 		String token = sensitiveDataSplitted[0];
-		builder.setToken(token);
+		JDABuilder builder = JDABuilder.createDefault(token);
 		builder.addEventListeners(new Main());
 		builder.addEventListeners(new MessageListener());
 		builder.addEventListeners(new ServerListener());

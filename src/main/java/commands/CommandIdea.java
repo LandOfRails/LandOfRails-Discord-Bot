@@ -25,56 +25,39 @@ public class CommandIdea implements Command {
 					+ "If you have a general suggestion choose \"all\", if the suggestion applies to a specific server choose between \"tc\", \"znd\", \"ir\" or \"rtm\". For example, the command should look like this: \"!idea **all** *Idea*\".")
 					.queue();
 		} else {
+
+			Long channelId = null;
+			String team = null;
+
 			switch (args[1].toLowerCase()) {
 			case "all":
-				event.getGuild().getTextChannelById(625701271051042905L)
-						.sendMessage("**Idee von:** " + event.getAuthor().getAsMention() + "\n \n" + args[2])
-						.queue(message -> {
-							message.addReaction(event.getGuild().getEmoteById(640284218974273546L)).queue();
-							message.addReaction(event.getGuild().getEmoteById(640284247084498965L)).queue();
-						});
-				event.getChannel().sendMessage("Thank you very much for your suggestion "
-						+ event.getAuthor().getAsMention() + "! It was successfully forwarded to the entire team.")
-						.queue();
+				channelId = 625701271051042905L;
+				team = ".";
 				break;
 			case "tc":
-				event.getGuild().getTextChannelById(518535634923814936L)
-						.sendMessage("**Idee von:** " + event.getAuthor().getAsMention() + "\n \n" + args[2])
-						.queue(message -> {
-							message.addReaction(event.getGuild().getEmoteById(640284218974273546L)).queue();
-							message.addReaction(event.getGuild().getEmoteById(640284247084498965L)).queue();
-						});
-				event.getChannel()
-						.sendMessage("Thank you very much for your suggestion " + event.getAuthor().getAsMention()
-								+ "! It was successfully forwarded to the entire team of Traincraft.")
-						.queue();
+				channelId = 518535634923814936L;
+				team = " of Traincraft.";
 				break;
 			case "znd":
-				event.getGuild().getTextChannelById(709848903540801586L)
-						.sendMessage("**Idee von:** " + event.getAuthor().getAsMention() + "\n \n" + args[2])
-						.queue(message -> {
-							message.addReaction(event.getGuild().getEmoteById(640284218974273546L)).queue();
-							message.addReaction(event.getGuild().getEmoteById(640284247084498965L)).queue();
-						});
-				event.getChannel()
-						.sendMessage("Thank you very much for your suggestion " + event.getAuthor().getAsMention()
-								+ "! It was successfully forwarded to the entire team of Zora no Densha.")
-						.queue();
+				channelId = 709848903540801586L;
+				team = " of Zora no Densha.";
 				break;
 			case "ir":
-				event.getGuild().getTextChannelById(530331487241764884L)
-						.sendMessage("**Idee von:** " + event.getAuthor().getAsMention() + "\n \n" + args[2])
-						.queue(message -> {
-							message.addReaction(event.getGuild().getEmoteById(640284218974273546L)).queue();
-							message.addReaction(event.getGuild().getEmoteById(640284247084498965L)).queue();
-						});
-				event.getChannel()
-						.sendMessage("Thank you very much for your suggestion " + event.getAuthor().getAsMention()
-								+ "! It was successfully forwarded to the entire team of Immersive Railroading.")
-						.queue();
+				channelId = 530331487241764884L;
+				team = " of Immersive Railroading.";
 				break;
 			case "rtm":
-				event.getGuild().getTextChannelById(530331723238473728L)
+				channelId = 530331723238473728L;
+				team = " of Real Train Mod.";
+				break;
+			default:
+				channelId = null;
+				team = null;
+			}
+
+			if (channelId != null) {
+
+				event.getGuild().getTextChannelById(channelId)
 						.sendMessage("**Idee von:** " + event.getAuthor().getAsMention() + "\n \n" + args[2])
 						.queue(message -> {
 							message.addReaction(event.getGuild().getEmoteById(640284218974273546L)).queue();
@@ -82,9 +65,9 @@ public class CommandIdea implements Command {
 						});
 				event.getChannel()
 						.sendMessage("Thank you very much for your suggestion " + event.getAuthor().getAsMention()
-								+ "! It was successfully forwarded to the entire team of Real Train Mod.")
+								+ "! It was successfully forwarded to the entire team" + team)
 						.queue();
-				break;
+
 			}
 		}
 

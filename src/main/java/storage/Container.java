@@ -1,21 +1,34 @@
 package storage;
 
-import net.dv8tion.jda.api.entities.Guild;
-
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
+import net.dv8tion.jda.api.entities.Guild;
 
 public class Container {
 
-    //Dateien
-    public static final File VotingFile = new File("./VotingList.txt");
-    public static final File SensitiveDataFile = new File("./Sensitive-data");
-    public static final File CommandIdeas = new File("./CommandIdeas.txt");
+	private Container() {
 
-    //Abstimmungen
-    public static ArrayList<Long> ActiveVotings = new ArrayList<>();
+	}
 
-    //Guild
-    public static Guild guild;
+	// Dateien
+	public static final File VotingFile = new File("./VotingList.txt");
+	public static final File SensitiveDataFile = new File("./Sensitive-data");
+	public static final File CommandIdeas = new File("./CommandIdeas.txt");
+
+	// Abstimmungen
+	public static final List<Long> ActiveVotings = new ArrayList<>();
+
+	// Guild
+	private static Guild guild;
+
+	public static Guild getGuild() {
+		return guild;
+	}
+
+	public static void setGuild(Guild g) {
+		guild = g;
+	}
 
 }
