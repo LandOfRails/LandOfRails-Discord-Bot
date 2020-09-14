@@ -26,28 +26,28 @@ public class CommandIdea implements Command {
 					.queue();
 		} else {
 
-			String channelId = null;
+			Long channelId = null;
 			String team = null;
 
 			switch (args[1].toLowerCase()) {
 			case "all":
-				channelId = "625701271051042905L";
+				channelId = 625701271051042905L;
 				team = ".";
 				break;
 			case "tc":
-				channelId = "518535634923814936L";
+				channelId = 518535634923814936L;
 				team = " of Traincraft.";
 				break;
 			case "znd":
-				channelId = "709848903540801586L";
+				channelId = 709848903540801586L;
 				team = " of Zora no Densha.";
 				break;
 			case "ir":
-				channelId = "530331487241764884L";
+				channelId = 530331487241764884L;
 				team = " of Immersive Railroading.";
 				break;
 			case "rtm":
-				channelId = "530331723238473728L";
+				channelId = 530331723238473728L;
 				team = " of Real Train Mod.";
 				break;
 			default:
