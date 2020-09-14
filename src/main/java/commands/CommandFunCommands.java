@@ -47,7 +47,7 @@ public class CommandFunCommands implements Command, Aliases {
 		String cmd = messageTextRaw.substring(1);
 
 		for (Entry<String, String> entry : map.entrySet()) {
-			if (cmd.startsWith(entry.getKey()))
+			if (cmd.matches("^" + entry.getKey() + "(\\s|$)"))
 				event.getGuild().getTextChannelById(532648338391040031L).sendMessage(entry.getValue()).queue();
 		}
 
@@ -55,13 +55,15 @@ public class CommandFunCommands implements Command, Aliases {
 
 	private String getTram() {
 		// @formatter:off
-		switch (ThreadLocalRandom.current().nextInt(1, 3 + 1)) {
+		switch (ThreadLocalRandom.current().nextInt(1, 4 + 1)) {
 			case 1:
 				return "https://media1.tenor.com/images/6ae61031c768f8e2980908bd1a67b850/tenor.gif?itemid=14228705";
 			case 2:
 				return "https://media.giphy.com/media/Tl2u4yXA90vQs/giphy.gif";
 			case 3:
 				return "https://media.giphy.com/media/80QxoQtZb4Gli/giphy.gif";
+			case 4:
+				return "https://iruntheinternet.com/lulzdump/images/gifs/gandalf-stopping-tram-train-shall-not-pass-1387281258e.gif";
 			default:
 				return "Error Random Tram";
 		}

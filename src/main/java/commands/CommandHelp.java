@@ -57,7 +57,7 @@ public class CommandHelp implements Command, Aliases {
 		helpEmbed.addField("!bee", "Minecraft bee", true);
 		helpEmbed.addField("!duck", "Duck GIF", true);
 		helpEmbed.addField("!train", "Railroad GIF", true);
-		helpEmbed.addField("!tram", "One of 3 Tram GIF's", true);
+		helpEmbed.addField("!tram", "One of 4 Tram GIF's", true);
 		helpEmbed.addField("!cat[2]", "Cat GIF", true);
 		helpEmbed.addField("!fuck", "Cursed.", true);
 
