@@ -35,7 +35,7 @@ public class Main implements EventListener {
 		}
 		String[] sensitiveDataSplitted = sensitiveData.split(" ");
 
-		String token = "NDkzMDc4NDQ0OTM5NDExNDU3.XsJlBA.uzPLd2pSDygTdDkxDZ61zu5xv-Q"; // sensitiveDataSplitted[0];
+		String token = sensitiveDataSplitted[0];
 		builder.setToken(token);
 		builder.addEventListeners(new Main());
 		builder.addEventListeners(new MessageListener());
