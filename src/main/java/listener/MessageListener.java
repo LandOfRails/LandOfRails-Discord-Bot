@@ -34,7 +34,7 @@ public class MessageListener extends ListenerAdapter {
 					.complete().delete().queueAfter(10, TimeUnit.SECONDS);
 		}
 
-		// Überprüfen ob Befehl
+		// ÃœberprÃ¼fen ob Befehl
 		if (messageTextRaw.startsWith(COMMANDPREFIX)) {
 
 			String cmd = messageTextRaw.substring(1);
@@ -72,7 +72,7 @@ public class MessageListener extends ListenerAdapter {
 					e.printStackTrace();
 				}
 				event.getChannel().sendMessage(
-						"Diesen Befehl gibt es noch nicht. Er wurde zur Liste hinzugef\u00fcgt und wird vielelicht irgendwann mit eingebaut :)")
+						"Diesen Befehl gibt es noch nicht. Er wurde zur Liste hinzugef\u00fcgt und wird vielleicht irgendwann mit eingebaut :)")
 						.queue();
 			}
 
