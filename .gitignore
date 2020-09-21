@@ -239,3 +239,7 @@ gradle-app.setting
 # Else
 Sensitive-data
 VotingList.txt
+credentials.json
+tokens/
+.idea/discord.xml
+tokens/StoredCredential
