@@ -50,15 +50,19 @@ public class Main implements EventListener {
         builder.setActivity(Activity.watching("Ich werde gerade gewartet."));
 
         // Daten laden
-        LocalSafeHandler.loadData();
+        LocalSafeHandler.loadData(Container.VotingFile, Container.ActiveVotings);
+        LocalSafeHandler.loadData(Container.LauncherPermissionTC, Container.LauncherPermissionListTC);
+        LocalSafeHandler.loadData(Container.LauncherPermissionIR, Container.LauncherPermissionListIR);
+        LocalSafeHandler.loadData(Container.LauncherPermissionZnD, Container.LauncherPermissionListZnD);
+        LocalSafeHandler.loadData(Container.LauncherPermissionRTM, Container.LauncherPermissionListRTM);
 
         // Start
         builder.build();
 
-        // Flyway (Databases)
-        // Flyway flyway = Flyway.configure().dataSource("landofrails.net",
-        // "discord-bot", sensitiveDataSplitted[1]).load();
-        // flyway.migrate();
+        //Flyway (Databases)
+//        Flyway flyway = Flyway.configure().dataSource("landofrails.net",
+//                "discord-bot", sensitiveDataSplitted[1]).load();
+//        flyway.migrate();
 
         // TimerTasks starten
         TimerTasks tt = new TimerTasks();

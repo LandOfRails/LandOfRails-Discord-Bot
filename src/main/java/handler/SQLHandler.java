@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MySQLHandler {
+public class SQLHandler {
 
     private static Connection conn;
 
@@ -32,15 +32,7 @@ public class MySQLHandler {
 
     public static void write(String text) {
         try {
-            conn.createStatement().executeQuery("INSERT INTO ActiveVotings (idActiveVotings) VALUES ('" + text + "');");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    public static void remove(String text) {
-        try {
-            conn.createStatement().executeQuery("REMOVE FROM ActiveVotings WHERE ('" + text + "');");
+            conn.createStatement().executeQuery(text);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
