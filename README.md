@@ -8,3 +8,4 @@ This Discord bot uses the following libraries:
 * [JDA (Java Discord API)](https://github.com/DV8FromTheWorld/JDA)
 * [Flyway](https://flywaydb.org/)
 * [Shadow](https://github.com/johnrengelman/shadow)
+* [Gson](https://github.com/google/gson)
