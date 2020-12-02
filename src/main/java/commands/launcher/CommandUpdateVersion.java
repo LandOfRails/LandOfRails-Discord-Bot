@@ -3,6 +3,7 @@ package commands.launcher;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import commands.interfaces.Command;
+import javafx.util.Pair;
 import model.Modpack;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -31,41 +32,45 @@ public class CommandUpdateVersion implements Command {
             switch (args[1].toLowerCase()) {
                 case "tc":
                     if (IsAllowed(Container.LauncherPermissionListTC, author)) {
-                        if (!updateVerison("traincraft", args[2])) {
-                            event.getChannel().sendMessage("Please specify a higher version than the previous one.").queue();
+                        Pair<Boolean, String> returned = updateVerison("traincraft", args[2]);
+                        if (!returned.getKey()) {
+                            event.getChannel().sendMessage("Please specify a higher version than " + returned.getValue()).queue();
                         } else
-                            event.getChannel().sendMessage("Modpack has been updated. Please also remember to change the link and version in the TechnicLauncher.").queue();
+                            event.getChannel().sendMessage("Modpack has been updated to version " + returned.getValue() + ". Please also remember to change the link and version in the TechnicLauncher.").queue();
                     }
                     break;
                 case "ir":
                     if (IsAllowed(Container.LauncherPermissionListIR, author)) {
-                        if (!updateVerison("immersive_railroading_freebuild", args[2])) {
-                            event.getChannel().sendMessage("Please specify a higher version than the previous one.").queue();
+                        Pair<Boolean, String> returned = updateVerison("immersive_railroading_freebuild", args[2]);
+                        if (!returned.getKey()) {
+                            event.getChannel().sendMessage("Please specify a higher version than " + returned.getValue()).queue();
                         } else
-                            event.getChannel().sendMessage("Modpack has been updated. Please also remember to change the link and version in the TechnicLauncher.").queue();
+                            event.getChannel().sendMessage("Modpack has been updated to version " + returned.getValue() + ". Please also remember to change the link and version in the TechnicLauncher.").queue();
                     }
                     break;
                 case "znd":
                     if (IsAllowed(Container.LauncherPermissionListZnD, author)) {
-                        if (!updateVerison("zoranodensha", args[2])) {
-                            event.getChannel().sendMessage("Please specify a higher version than the previous one.").queue();
+                        Pair<Boolean, String> returned = updateVerison("zoranodensha", args[2]);
+                        if (!returned.getKey()) {
+                            event.getChannel().sendMessage("Please specify a higher version than " + returned.getValue()).queue();
                         } else
-                            event.getChannel().sendMessage("Modpack has been updated. Please also remember to change the link and version in the TechnicLauncher.").queue();
+                            event.getChannel().sendMessage("Modpack has been updated to version " + returned.getValue() + ". Please also remember to change the link and version in the TechnicLauncher.").queue();
                     }
                     break;
                 case "rtm":
                     if (IsAllowed(Container.LauncherPermissionListRTM, author)) {
-                        if (!updateVerison("realtrainmod", args[2])) {
-                            event.getChannel().sendMessage("Please specify a higher version than the previous one.").queue();
+                        Pair<Boolean, String> returned = updateVerison("realtrainmod", args[2]);
+                        if (!returned.getKey()) {
+                            event.getChannel().sendMessage("Please specify a higher version than " + returned.getValue()).queue();
                         } else
-                            event.getChannel().sendMessage("Modpack has been updated. Please also remember to change the link and version in the TechnicLauncher.").queue();
+                            event.getChannel().sendMessage("Modpack has been updated to version " + returned.getValue() + ". Please also remember to change the link and version in the TechnicLauncher.").queue();
                     }
                     break;
             }
         }
     }
 
-    private boolean updateVerison(String modpackName, String newVersion) {
+    private Pair<Boolean, String> updateVerison(String modpackName, String newVersion) {
         List<Modpack> modpackList;
         String json = "";
         File jsonFile = new File("/var/www/launcher/ModpackList.json");
@@ -83,7 +88,9 @@ public class CommandUpdateVersion implements Command {
             if (m.getName().equals(modpackName)) {
                 if (CompareVersions(m.getModpackVersion(), newVersion) == -1) {
                     m.setModpackVersion(newVersion);
-                } else return false;
+                } else {
+                    return new Pair<>(false, m.getModpackVersion());
+                }
                 break;
             }
         }
@@ -94,7 +101,7 @@ public class CommandUpdateVersion implements Command {
         } catch (final Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return new Pair<>(true, newVersion);
     }
 
     private int CompareVersions(String version1, String version2) {
