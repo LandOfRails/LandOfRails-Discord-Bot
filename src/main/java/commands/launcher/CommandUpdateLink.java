@@ -33,24 +33,32 @@ public class CommandUpdateLink implements Command {
                     if (IsAllowed(Container.LauncherPermissionListTC, author)) {
                         updateLink("traincraft", args[2]);
                         event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "ir":
                     if (IsAllowed(Container.LauncherPermissionListIR, author)) {
                         updateLink("immersive_railroading_freebuild", args[2]);
                         event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "znd":
                     if (IsAllowed(Container.LauncherPermissionListZnD, author)) {
                         updateLink("zoranodensha", args[2]);
                         event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "rtm":
                     if (IsAllowed(Container.LauncherPermissionListRTM, author)) {
                         updateLink("realtrainmod", args[2]);
                         event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
             }

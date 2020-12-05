@@ -26,24 +26,32 @@ public class CommandRemovePermission implements Command {
                     if (IsAllowed(Container.LauncherPermissionListTC, author)) {
                         Container.LauncherPermissionListTC.remove(event.getMessage().getMentionedUsers().get(0).getIdLong());
                         event.getChannel().sendMessage("Permission revoked.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "ir":
                     if (IsAllowed(Container.LauncherPermissionListIR, author)) {
                         Container.LauncherPermissionListIR.remove(event.getMessage().getMentionedUsers().get(0).getIdLong());
                         event.getChannel().sendMessage("Permission revoked.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "znd":
                     if (IsAllowed(Container.LauncherPermissionListZnD, author)) {
                         Container.LauncherPermissionListZnD.remove(event.getMessage().getMentionedUsers().get(0).getIdLong());
                         event.getChannel().sendMessage("Permission revoked.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "rtm":
                     if (IsAllowed(Container.LauncherPermissionListRTM, author)) {
                         Container.LauncherPermissionListRTM.remove(event.getMessage().getMentionedUsers().get(0).getIdLong());
                         event.getChannel().sendMessage("Permission revoked.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
             }

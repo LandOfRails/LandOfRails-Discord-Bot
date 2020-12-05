@@ -26,24 +26,32 @@ public class CommandAddPermission implements Command {
                     if (IsAllowed(Container.LauncherPermissionListTC, author)) {
                         Container.LauncherPermissionListTC.add(event.getMessage().getMentionedUsers().get(0).getIdLong());
                         event.getChannel().sendMessage("Permission granted.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "ir":
                     if (IsAllowed(Container.LauncherPermissionListIR, author)) {
                         Container.LauncherPermissionListIR.add(event.getMessage().getMentionedUsers().get(0).getIdLong());
                         event.getChannel().sendMessage("Permission granted.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "znd":
                     if (IsAllowed(Container.LauncherPermissionListZnD, author)) {
                         Container.LauncherPermissionListZnD.add(event.getMessage().getMentionedUsers().get(0).getIdLong());
                         event.getChannel().sendMessage("Permission granted.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "rtm":
                     if (IsAllowed(Container.LauncherPermissionListRTM, author)) {
                         Container.LauncherPermissionListRTM.add(event.getMessage().getMentionedUsers().get(0).getIdLong());
                         event.getChannel().sendMessage("Permission granted.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
             }

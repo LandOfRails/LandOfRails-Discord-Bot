@@ -37,6 +37,8 @@ public class CommandUpdateVersion implements Command {
                             event.getChannel().sendMessage("Please specify a higher version than " + returned.getValue()).queue();
                         } else
                             event.getChannel().sendMessage("Modpack has been updated to version " + returned.getValue() + ". Please also remember to change the link and version in the TechnicLauncher.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "ir":
@@ -46,6 +48,8 @@ public class CommandUpdateVersion implements Command {
                             event.getChannel().sendMessage("Please specify a higher version than " + returned.getValue()).queue();
                         } else
                             event.getChannel().sendMessage("Modpack has been updated to version " + returned.getValue() + ". Please also remember to change the link and version in the TechnicLauncher.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "znd":
@@ -55,6 +59,8 @@ public class CommandUpdateVersion implements Command {
                             event.getChannel().sendMessage("Please specify a higher version than " + returned.getValue()).queue();
                         } else
                             event.getChannel().sendMessage("Modpack has been updated to version " + returned.getValue() + ". Please also remember to change the link and version in the TechnicLauncher.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
                 case "rtm":
@@ -64,11 +70,14 @@ public class CommandUpdateVersion implements Command {
                             event.getChannel().sendMessage("Please specify a higher version than " + returned.getValue()).queue();
                         } else
                             event.getChannel().sendMessage("Modpack has been updated to version " + returned.getValue() + ". Please also remember to change the link and version in the TechnicLauncher.").queue();
+                    } else {
+                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
                     break;
             }
         }
     }
+
 
     private Pair<Boolean, String> updateVerison(String modpackName, String newVersion) {
         List<Modpack> modpackList;
