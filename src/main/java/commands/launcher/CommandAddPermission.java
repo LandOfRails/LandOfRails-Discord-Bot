@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import storage.Container;
 
-import java.util.List;
+import static commands.utils.LauncherModpackUtils.IsAllowed;
 
 public class CommandAddPermission implements Command {
     @Override
@@ -56,18 +56,5 @@ public class CommandAddPermission implements Command {
                     break;
             }
         }
-    }
-
-    private boolean IsAllowed(List<Long> list, User author) {
-        for (long i : list) {
-            if (author.getIdLong() == i) {
-                return true;
-            }
-        }
-        //Check if MarkenJaden
-        if (author.getIdLong() == 222733101770604545L) {
-            return true;
-        }
-        return false;
     }
 }

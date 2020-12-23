@@ -1,7 +1,6 @@
 package commands.launcher;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import commands.interfaces.Command;
 import model.Modpack;
 import net.dv8tion.jda.api.entities.User;
@@ -9,10 +8,11 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import storage.Container;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
-import java.util.Scanner;
+
+import static commands.utils.LauncherModpackUtils.IsAllowed;
+import static commands.utils.LauncherModpackUtils.getModpackList;
 
 public class CommandUpdateLink implements Command {
     @Override
@@ -32,7 +32,7 @@ public class CommandUpdateLink implements Command {
                 case "tc":
                     if (IsAllowed(Container.LauncherPermissionListTC, author)) {
                         updateLink("traincraft", args[2]);
-                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update.").queue();
+                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion tc " + getGreaterModpackVersion("traincraft")).queue();
                     } else {
                         event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
@@ -40,7 +40,7 @@ public class CommandUpdateLink implements Command {
                 case "ir":
                     if (IsAllowed(Container.LauncherPermissionListIR, author)) {
                         updateLink("immersive_railroading_freebuild", args[2]);
-                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update.").queue();
+                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion ir " + getGreaterModpackVersion("immersive_railroading_freebuild")).queue();
                     } else {
                         event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
@@ -48,7 +48,7 @@ public class CommandUpdateLink implements Command {
                 case "znd":
                     if (IsAllowed(Container.LauncherPermissionListZnD, author)) {
                         updateLink("zoranodensha", args[2]);
-                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update.").queue();
+                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion znd " + getGreaterModpackVersion("zoranodensha")).queue();
                     } else {
                         event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
@@ -56,7 +56,7 @@ public class CommandUpdateLink implements Command {
                 case "rtm":
                     if (IsAllowed(Container.LauncherPermissionListRTM, author)) {
                         updateLink("realtrainmod", args[2]);
-                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update.").queue();
+                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion rtm " + getGreaterModpackVersion("realtrainmod")).queue();
                     } else {
                         event.getChannel().sendMessage("You don't have permission to use this command.").queue();
                     }
@@ -66,19 +66,7 @@ public class CommandUpdateLink implements Command {
     }
 
     private void updateLink(String modpackName, String newLink) {
-        List<Modpack> modpackList;
-        String json = "";
-        File jsonFile = new File("/var/www/launcher/ModpackList.json");
-        try {
-            Scanner s = new Scanner(jsonFile);
-            while (s.hasNextLine()) {
-                json += s.nextLine();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        modpackList = new Gson().fromJson(json, new TypeToken<List<Modpack>>() {
-        }.getType());
+        List<Modpack> modpackList = getModpackList();
         for (Modpack m : modpackList) {
             if (m.getName().equals(modpackName)) {
                 m.setLocationOnServer(newLink);
@@ -86,7 +74,7 @@ public class CommandUpdateLink implements Command {
             }
         }
 
-        try (FileWriter fw = new FileWriter(jsonFile); BufferedWriter bw = new BufferedWriter(fw)) {
+        try (FileWriter fw = new FileWriter("/var/www/launcher/ModpackList.json"); BufferedWriter bw = new BufferedWriter(fw)) {
             bw.write(new Gson().toJson(modpackList));
             bw.flush();
         } catch (final Exception e) {
@@ -94,16 +82,15 @@ public class CommandUpdateLink implements Command {
         }
     }
 
-    private boolean IsAllowed(List<Long> list, User author) {
-        for (long i : list) {
-            if (author.getIdLong() == i) {
-                return true;
+    private String getGreaterModpackVersion(String modpackName) {
+        for (Modpack m : getModpackList()) {
+            if (m.getName().equals(modpackName)) {
+                String version = m.getModpackVersion();
+                String[] versionNumbers = version.split(".");
+                int lastNumber = Integer.parseInt(versionNumbers[versionNumbers.length - 1]);
+                return String.join(".", versionNumbers) + "." + lastNumber++;
             }
         }
-        //Check if MarkenJaden
-        if (author.getIdLong() == 222733101770604545L) {
-            return true;
-        }
-        return false;
+        return "Error getModpackVersion";
     }
 }
