@@ -85,10 +85,19 @@ public class CommandUpdateLink implements Command {
     private String getGreaterModpackVersion(String modpackName) {
         for (Modpack m : getModpackList()) {
             if (m.getName().equals(modpackName)) {
-                String version = m.getModpackVersion();
-                String[] versionNumbers = version.split(".");
-                int lastNumber = Integer.parseInt(versionNumbers[versionNumbers.length - 1]);
-                return String.join(".", versionNumbers) + "." + lastNumber++;
+                try {
+                    String version = m.getModpackVersion();
+                    System.out.println(version);
+                    String[] versionNumbers = version.split("\\.");
+                    int lastNumber = Integer.parseInt(versionNumbers[versionNumbers.length - 1]);
+                    String result = "";
+                    for (int i = 0; i < versionNumbers.length - 1; i++) {
+                        result += versionNumbers[i] + ".";
+                    }
+                    return result + (lastNumber + 1);
+                } catch (Exception e) {
+                    return "Error getModpackVersion";
+                }
             }
         }
         return "Error getModpackVersion";
