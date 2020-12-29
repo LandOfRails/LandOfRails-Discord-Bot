@@ -30,6 +30,14 @@ public class Modpack {
         Title = title;
     }
 
+    public String getShortcut() {
+        return Shortcut;
+    }
+
+    public void setShortcut(String shortcut) {
+        Shortcut = shortcut;
+    }
+
     public String getMinecraftVersion() {
         return MinecraftVersion;
     }
@@ -88,6 +96,7 @@ public class Modpack {
 
     public String Name;
     public String Title;
+    public String Shortcut;
     public String MinecraftVersion;
     public String ModpackVersion;
     public int Organisation;
@@ -101,6 +110,7 @@ public class Modpack {
         return "Modpack{" +
                 "Name='" + Name + '\'' +
                 ", Title='" + Title + '\'' +
+                ", Shortcut='" + Shortcut + '\'' +
                 ", MinecraftVersion='" + MinecraftVersion + '\'' +
                 ", ModpackVersion='" + ModpackVersion + '\'' +
                 ", Organisation=" + Organisation +
