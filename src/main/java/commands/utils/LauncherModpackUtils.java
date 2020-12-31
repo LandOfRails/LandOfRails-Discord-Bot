@@ -61,7 +61,7 @@ public class LauncherModpackUtils {
         try {
             Connection conn = Container.getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT MemberID FROM launcherAccess WHERE MemberID=" + author.getId() + " AND ModpackShortcut=" + shortcut.toLowerCase(Locale.ROOT));
+            ResultSet rs = stmt.executeQuery("SELECT MemberID FROM launcherAccess WHERE MemberID=" + author.getId() + " AND ModpackShortcut='" + shortcut.toLowerCase(Locale.ROOT) + "'");
             rs.last();
             stmt.close();
             conn.close();

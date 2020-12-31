@@ -53,7 +53,7 @@ public class Main implements EventListener {
         LocalSafeHandler.loadData(Container.VotingFile, Container.ActiveVotings);
 
         //DB
-        Container container = new Container("jdbc:mariadb://landofrails.net:3306/DB?user=discord-bot&password=" + sensitiveDataSplitted[1]);
+        Container container = new Container("jdbc:mariadb://landofrails.net:3306/discord-bot?user=discord-bot&password=" + sensitiveDataSplitted[1]);
 
         // Start
         builder.build();

@@ -36,7 +36,7 @@ public class CommandAddPermission implements Command {
                         try {
                             Connection conn = Container.getConnection();
                             Statement stmt = conn.createStatement();
-                            stmt.execute("INSERT INTO launcherAccess (MemberID, ModpackShortcut) VALUES (" + event.getMessage().getMentionedMembers().get(0).getId() + ", " + args[1].toLowerCase(Locale.ROOT) + ")");
+                            stmt.execute("INSERT INTO launcherAccess (MemberID, ModpackShortcut) VALUES (" + event.getMessage().getMentionedMembers().get(0).getId() + ", '" + args[1].toLowerCase(Locale.ROOT) + "')");
                             event.getChannel().sendMessage("Permission granted.").queue();
                             stmt.close();
                             conn.close();
