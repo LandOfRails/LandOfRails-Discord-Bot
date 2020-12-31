@@ -128,9 +128,8 @@ public class Modpack {
             return false;
         } else {
             Modpack modpack = (Modpack) obj;
-            if (!Shortcut.equalsIgnoreCase(modpack.getShortcut()) && !Title.equalsIgnoreCase(modpack.getTitle()) && !Name.equalsIgnoreCase(modpack.getName()) && Organisation != modpack.Organisation) {
+            if (!Shortcut.equalsIgnoreCase(modpack.getShortcut()) && !Title.equalsIgnoreCase(modpack.getTitle()) && !Name.equalsIgnoreCase(modpack.getName()) && Organisation != modpack.Organisation)
                 return false;
-            }
             return true;
         }
     }

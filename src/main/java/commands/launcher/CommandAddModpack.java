@@ -42,20 +42,20 @@ public class CommandAddModpack implements Command {
         if (args.length != 10) {
             // @formatter:off
             String response =
-                    "Falsche Syntax!\n"
-                            + "!addModpack **Name**\n"
-                            + "**Title**\n"
-                            + "**MC Version**\n"
-                            + "**Modpack Version**\n"
-                            + "**Organisation**\n"
-                            + "**Key**\n"
-                            + "**Location on server**\n"
-                            + "**Image URL**\n"
-                            + "**Downloaded Image**";
+                    "Irgendwas ist da schiefgelaufen mmh, versuche es nochmal nach folgendem Aufbau:\n\n"
+                            + "!addModpack **Universeller Name (ohne Leerzeichen, z.B. super_geiles_modpack)**\n"
+                            + "**Titel der im Launcher angezeigt wird (z.B. SUPER GEILES MODPACK UNBEDINGT DOWNLOADEN)**\n"
+                            + "**Abkürzung (z.B. ir)**\n"
+                            + "**MC Version (z.B. 1.12.2)**\n"
+                            + "**Modpack Version (z.B. 1.0.3**\n"
+                            + "**An welcher Position befindet sich das Modpack (Zahl)**\n"
+                            + "**Super geheimer Schlüssel (falls nicht benötigt einfach eine leere Zeile lassen)**\n"
+                            + "**Download Link (genauso wie beim TechnicLauncher)**\n"
+                            + "**Hintergrund Bild (Link)**\n"
+                            + "**Icon vom Modpack wenn es heruntergeladen wurde (Link)**";
             // @formatter:on
             channel.sendMessage(response).queue();
         } else {
-
             String name = args[0].split(" ")[1];
             String title = args[1];
             String shortcut = args[2];
@@ -86,7 +86,7 @@ public class CommandAddModpack implements Command {
 
                 List<Modpack> modpackList = getModpackList();
 
-                boolean modpackValid = !modpackList.stream().noneMatch(m -> m.equals(modpack));
+                boolean modpackValid = modpackList.stream().noneMatch(m -> m.equals(modpack));
                 if (modpackValid) {
                     modpackList.add(modpack);
 
@@ -100,7 +100,7 @@ public class CommandAddModpack implements Command {
                     channel.sendMessage(modpack.toString()).queue();
                     channel.sendMessage("Erstellt!").queue();
                 } else {
-                    channel.sendMessage("Das Modpack doppelt sich mit anderen Modpacks.").queue();
+                    channel.sendMessage("Dieses Modpack existiert bereits.").queue();
                 }
 
             }
