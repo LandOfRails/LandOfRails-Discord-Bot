@@ -49,7 +49,7 @@ public class CommandUpdateLink implements Command {
                         } catch (Exception e) {
                             result = "Error getModpackVersion";
                         } finally {
-                            event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion tc " + result).queue();
+                            event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion " + args[1] + " " + result).queue();
                         }
                     } else
                         event.getChannel().sendMessage("You don't have permission to use this command for this modpack.").queue();
