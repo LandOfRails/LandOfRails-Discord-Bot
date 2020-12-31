@@ -1,9 +1,10 @@
 package model;
 
 public class Modpack {
-    public Modpack(String name, String title, String modpackVersion, String minecraftVersion, int organisation, String key, String locationOnServer, String imageUrl, String downloadedImage) {
+    public Modpack(String name, String title, String shortcut, String modpackVersion, String minecraftVersion, int organisation, String key, String locationOnServer, String imageUrl, String downloadedImage) {
         Name = name;
         Title = title;
+        Shortcut = shortcut;
         MinecraftVersion = minecraftVersion;
         ModpackVersion = modpackVersion;
         Organisation = organisation;
@@ -119,5 +120,18 @@ public class Modpack {
                 ", ImageUrl='" + ImageUrl + '\'' +
                 ", DownloadedImage='" + DownloadedImage + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Modpack)) {
+            return false;
+        } else {
+            Modpack modpack = (Modpack) obj;
+            if (!Shortcut.equalsIgnoreCase(modpack.getShortcut()) && !Title.equalsIgnoreCase(modpack.getTitle()) && !Name.equalsIgnoreCase(modpack.getName()) && Organisation != modpack.Organisation) {
+                return false;
+            }
+            return true;
+        }
     }
 }

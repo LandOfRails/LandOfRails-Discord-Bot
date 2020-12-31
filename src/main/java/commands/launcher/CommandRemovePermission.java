@@ -1,11 +1,18 @@
 package commands.launcher;
 
 import commands.interfaces.Command;
-import net.dv8tion.jda.api.entities.User;
+import model.Modpack;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import storage.Container;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
 import static commands.utils.LauncherModpackUtils.IsAllowed;
+import static commands.utils.LauncherModpackUtils.getModpackList;
 
 public class CommandRemovePermission implements Command {
     @Override
@@ -15,45 +22,29 @@ public class CommandRemovePermission implements Command {
 
     @Override
     public void onCall(MessageReceivedEvent event) {
-        User author = event.getAuthor();
+        Member author = event.getMember();
 
         String[] args = event.getMessage().getContentRaw().split(" ", 3);
         if (args.length < 3) {
             event.getChannel().sendMessage("Please enter a valid server shortcut.").queue();
         } else {
-            switch (args[1].toLowerCase()) {
-                case "tc":
-                    if (IsAllowed(Container.LauncherPermissionListTC, author)) {
-                        Container.LauncherPermissionListTC.remove(event.getMessage().getMentionedUsers().get(0).getIdLong());
-                        event.getChannel().sendMessage("Permission revoked.").queue();
-                    } else {
-                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
-                    }
-                    break;
-                case "ir":
-                    if (IsAllowed(Container.LauncherPermissionListIR, author)) {
-                        Container.LauncherPermissionListIR.remove(event.getMessage().getMentionedUsers().get(0).getIdLong());
-                        event.getChannel().sendMessage("Permission revoked.").queue();
-                    } else {
-                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
-                    }
-                    break;
-                case "znd":
-                    if (IsAllowed(Container.LauncherPermissionListZnD, author)) {
-                        Container.LauncherPermissionListZnD.remove(event.getMessage().getMentionedUsers().get(0).getIdLong());
-                        event.getChannel().sendMessage("Permission revoked.").queue();
-                    } else {
-                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
-                    }
-                    break;
-                case "rtm":
-                    if (IsAllowed(Container.LauncherPermissionListRTM, author)) {
-                        Container.LauncherPermissionListRTM.remove(event.getMessage().getMentionedUsers().get(0).getIdLong());
-                        event.getChannel().sendMessage("Permission revoked.").queue();
-                    } else {
-                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
-                    }
-                    break;
+            List<Modpack> modpackList = getModpackList();
+            for (Modpack m : modpackList) {
+                if (m.getShortcut().equalsIgnoreCase(args[1])) {
+                    if (IsAllowed(author, args[1])) {
+                        try {
+                            Connection conn = Container.getConnection();
+                            Statement stmt = conn.createStatement();
+                            stmt.execute("DELETE FROM launcherAccess WHERE MemberID=" + event.getMessage().getMentionedMembers().get(0).getId());
+                            event.getChannel().sendMessage("Permission revoked.").queue();
+                            stmt.close();
+                            conn.close();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    } else
+                        event.getChannel().sendMessage("You don't have permission to use this command for this modpack.").queue();
+                }
             }
         }
     }

@@ -13,10 +13,6 @@ public class StartStopListener extends ListenerAdapter {
     @Override
     public void onShutdown(@Nonnull ShutdownEvent event) {
         LocalSafeHandler.saveData(Container.VotingFile, Container.ActiveVotings);
-        LocalSafeHandler.saveData(Container.LauncherPermissionTC, Container.LauncherPermissionListTC);
-        LocalSafeHandler.saveData(Container.LauncherPermissionIR, Container.LauncherPermissionListIR);
-        LocalSafeHandler.saveData(Container.LauncherPermissionZnD, Container.LauncherPermissionListZnD);
-        LocalSafeHandler.saveData(Container.LauncherPermissionRTM, Container.LauncherPermissionListRTM);
         System.exit(event.getCode());
 
     }
