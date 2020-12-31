@@ -6,6 +6,6 @@
 ## Dependencies
 This Discord bot uses the following libraries:
 * [JDA (Java Discord API)](https://github.com/DV8FromTheWorld/JDA)
-* [Flyway](https://flywaydb.org/)
+* [MariaDB Connector/J](https://mariadb.com/kb/en/about-mariadb-connector-j/)
 * [Shadow](https://github.com/johnrengelman/shadow)
 * [Gson](https://github.com/google/gson)
