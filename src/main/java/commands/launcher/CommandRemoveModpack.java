@@ -4,6 +4,7 @@ import commands.interfaces.Command;
 import model.Modpack;
 import model.Triple;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -44,11 +45,13 @@ public class CommandRemoveModpack implements Command {
 
             for (Modpack m : modpackList) {
                 if (m.getShortcut().equalsIgnoreCase(args[1])) {
+                    Message[] messageId = new Message[1];
                     event.getChannel().sendMessage("Bitte bestätige dass du das Modpack \"" + m.getTitle() + "\" wirklich löschen möchtest.").queue(message -> {
+                        messageId[0] = message;
                         Container.modpackDeletionList.add(new Triple<>(message, event.getMember().getIdLong(), m));
-                        message.addReaction("U+2705").complete();
-                        message.addReaction("U+274C").complete();
                     });
+                    messageId[0].addReaction("U+2705").complete();
+                    messageId[0].addReaction("U+274C").complete();
                 }
             }
 
