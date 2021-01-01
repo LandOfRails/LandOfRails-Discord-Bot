@@ -199,7 +199,7 @@ public class ReactionListener extends ListenerAdapter {
         if (!Container.modpackDeletionList.isEmpty()) {
             for (Triple<Message, Long, Modpack> p : Container.modpackDeletionList) {
                 if (p.getLeft().getIdLong() == event.getMessageIdLong() && p.getMiddle() == event.getMember().getIdLong()) {
-                    p.getLeft().clearReactions();
+                    p.getLeft().clearReactions().queue();
                     if (event.getReactionEmote().getAsCodepoints().equals("U+2705")) {
                         List<Modpack> modpackList = LauncherModpackUtils.getModpackList();
                         modpackList.remove(p.getRight());
@@ -209,7 +209,7 @@ public class ReactionListener extends ListenerAdapter {
                         } catch (final Exception e) {
                             e.printStackTrace();
                         }
-                        event.getChannel().sendMessage("Modpack \"" + p.getRight().getTitle() + "\" gelöscht.");
+                        event.getChannel().sendMessage("Modpack \"" + p.getRight().getTitle() + "\" gelöscht.").queue();
                     } else {
                         event.getChannel().sendMessage("Löschen abgebrochen.").queue();
                     }
