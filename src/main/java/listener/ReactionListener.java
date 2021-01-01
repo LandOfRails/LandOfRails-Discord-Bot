@@ -2,6 +2,11 @@ package listener;
 
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.gson.Gson;
+import commands.utils.LauncherModpackUtils;
+import model.Modpack;
+import model.Triple;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
@@ -9,6 +14,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import storage.Container;
 
 import javax.annotation.Nonnull;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.text.DateFormat;
@@ -185,6 +192,27 @@ public class ReactionListener extends ListenerAdapter {
                     conn.close();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
+                }
+            }
+        }
+
+        if (!Container.modpackDeletionList.isEmpty()) {
+            for (Triple<Message, Long, Modpack> p : Container.modpackDeletionList) {
+                if (p.getLeft().getIdLong() == event.getMessageIdLong() && p.getMiddle() == event.getMember().getIdLong()) {
+                    p.getLeft().clearReactions();
+                    if (event.getReactionEmote().getAsCodepoints().equals("U+2705")) {
+                        List<Modpack> modpackList = LauncherModpackUtils.getModpackList();
+                        modpackList.remove(p.getRight());
+                        try (FileWriter fw = new FileWriter("/var/www/launcher/ModpackList.json"); BufferedWriter bw = new BufferedWriter(fw)) {
+                            bw.write(new Gson().toJson(modpackList));
+                            bw.flush();
+                        } catch (final Exception e) {
+                            e.printStackTrace();
+                        }
+                        event.getChannel().sendMessage("Modpack \"" + p.getRight().getTitle() + "\" gelöscht.");
+                    } else {
+                        event.getChannel().sendMessage("Löschen abgebrochen.").queue();
+                    }
                 }
             }
         }
