@@ -175,7 +175,7 @@ public class ReactionListener extends ListenerAdapter {
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT * FROM teamRulesAccepted WHERE MemberID=" + event.getMember().getId());
                     rs.last();
-                    DateFormat dtf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    DateFormat dtf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
                     if (rs.getRow() == 0) {
                         Timestamp time = new Timestamp(System.currentTimeMillis());
                         PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO teamRulesAccepted (MemberID, MemberUsername, Timestamp) VALUES (" + event.getMember().getId() + ", '" + event.getUser().getName() + "', ?)");
