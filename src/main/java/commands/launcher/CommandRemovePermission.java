@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Locale;
 
 import static commands.utils.LauncherModpackUtils.IsAllowed;
 import static commands.utils.LauncherModpackUtils.getModpackList;
@@ -35,8 +36,10 @@ public class CommandRemovePermission implements Command {
                         try {
                             Connection conn = Container.getConnection();
                             Statement stmt = conn.createStatement();
-                            stmt.execute("DELETE FROM launcherAccess WHERE MemberID=" + event.getMessage().getMentionedMembers().get(0).getId());
-                            event.getChannel().sendMessage("Permission revoked.").queue();
+                            if (stmt.execute("DELETE FROM launcherAccess WHERE MemberID=" + event.getMessage().getMentionedMembers().get(0).getId() + " AND ModpackShortcut=" + args[1].toLowerCase(Locale.ROOT)))
+                                event.getChannel().sendMessage("Permission revoked.").queue();
+                            else
+                                event.getChannel().sendMessage("Something went wrong. Please check your command again.").queue();
                             stmt.close();
                             conn.close();
                         } catch (SQLException throwables) {
