@@ -10,8 +10,12 @@ import storage.Container;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ReactionListener extends ListenerAdapter {
 
@@ -154,6 +158,34 @@ public class ReactionListener extends ListenerAdapter {
 
                 //Delete reaction
                 event.getReaction().removeReaction(event.getUser()).complete();
+            }
+        }
+
+        if (event.getMessageIdLong() == 794590774566191145L) {
+            if (event.getReactionEmote().getAsCodepoints().equals("U+2705")) {
+                try {
+                    Connection conn = Container.getConnection();
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM teamRulesAccepted WHERE MemberID=" + event.getMember().getId());
+                    rs.last();
+                    DateFormat dtf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    if (rs.getRow() == 0) {
+                        Timestamp time = new Timestamp(System.currentTimeMillis());
+                        PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO teamRulesAccepted (MemberID, MemberUsername, Timestamp) VALUES (" + event.getMember().getId() + ", '" + event.getUser().getName() + "', ?)");
+                        stmt2.setTimestamp(1, time);
+                        stmt2.execute();
+                        event.getChannel().sendMessage(event.getMember().getAsMention() + " accepted the rules on " + dtf.format(time)).complete().delete().queueAfter(10, TimeUnit.SECONDS);
+                        event.getReaction().removeReaction(event.getUser()).complete();
+                        stmt2.close();
+                    } else {
+                        event.getReaction().removeReaction(event.getUser()).complete();
+                        event.getChannel().sendMessage(event.getMember().getAsMention() + " already accepted the rules on " + dtf.format(rs.getDate("Timestamp"))).complete().delete().queueAfter(10, TimeUnit.SECONDS);
+                    }
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         }
     }
