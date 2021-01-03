@@ -34,6 +34,9 @@ public class MessageListener extends ListenerAdapter {
 					.complete().delete().queueAfter(10, TimeUnit.SECONDS);
 		}
 
+		// For !afk command
+		CommandList.AFKCOMMAND.onMessageEvent(event);
+
 		// Überprüfen ob Befehl
 		if (messageTextRaw.startsWith(COMMANDPREFIX)) {
 

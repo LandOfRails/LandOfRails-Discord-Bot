@@ -38,6 +38,7 @@ public class CommandFunCommands implements Command, Aliases {
 
 	@Override
 	public String[] getAliases() {
+		refreshMap();
 		return map.keySet().toArray(new String[map.size()]);
 	}
 
