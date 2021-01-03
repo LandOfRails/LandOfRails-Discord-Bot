@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.security.auth.login.LoginException;
 
+import handler.GoogleAuthorizeUtil;
 import handler.LocalSafeHandler;
 import handler.TimerTasks;
 import listener.MessageListener;
@@ -36,8 +37,8 @@ public class Main implements EventListener {
 		String[] sensitiveDataSplitted = sensitiveData.split(" ");
 
 		// Google sheets stuff
-//        Container.sheetsService = GoogleAuthorizeUtil.getSheetsService();
-//        Container.spreadsheetId = sensitiveDataSplitted[2];
+		Container.sheetsService = GoogleAuthorizeUtil.getSheetsService();
+		Container.spreadsheetId = sensitiveDataSplitted[2];
 
 		// Init Discord Bot
 		String token = sensitiveDataSplitted[0];
@@ -53,8 +54,8 @@ public class Main implements EventListener {
 		LocalSafeHandler.loadData(Container.VotingFile, Container.ActiveVotings);
 
 		// DB
-//		Container container = new Container("jdbc:mariadb://landofrails.net:3306/discord-bot?user=discord-bot&password="
-//				+ sensitiveDataSplitted[1]);
+		Container container = new Container("jdbc:mariadb://landofrails.net:3306/discord-bot?user=discord-bot&password="
+				+ sensitiveDataSplitted[1]);
 
 		// Start
 		builder.build();
