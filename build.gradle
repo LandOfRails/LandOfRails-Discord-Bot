@@ -19,12 +19,10 @@ dependencies {
     compile 'net.dv8tion:JDA:4.2.0_224'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
-    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     compile group: 'org.apache.cayenne', name: 'cayenne-server', version: '4.0.2'
-//    compile "org.flywaydb:flyway-core:7.0.0"
-//    testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
     compile 'com.google.api-client:google-api-client:1.30.4'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.30.6'
     compile 'com.google.apis:google-api-services-sheets:v4-rev581-1.25.0'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
 }

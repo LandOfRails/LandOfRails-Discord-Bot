@@ -3,10 +3,16 @@ package commands.utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Modpack;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.Member;
+import storage.Container;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class LauncherModpackUtils {
@@ -50,16 +56,21 @@ public class LauncherModpackUtils {
         }.getType());
     }
 
-    public static boolean IsAllowed(List<Long> list, User author) {
-        for (long i : list) {
-            if (author.getIdLong() == i) {
-                return true;
-            }
+    public static boolean IsAllowed(Member author, String shortcut) {
+        if (author.isOwner()) return true;
+        try {
+            Connection conn = Container.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT MemberID FROM launcherAccess WHERE MemberID=" + author.getId() + " AND ModpackShortcut='" + shortcut.toLowerCase(Locale.ROOT) + "'");
+            rs.last();
+            stmt.close();
+            conn.close();
+            System.out.println(rs.getRow());
+            return rs.getRow() == 1;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        //Check if MarkenJaden
-        if (author.getIdLong() == 222733101770604545L) {
-            return true;
-        }
+
         return false;
     }
 
