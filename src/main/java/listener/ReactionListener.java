@@ -110,7 +110,7 @@ public class ReactionListener extends ListenerAdapter {
     public void onMessageReactionAdd(@Nonnull MessageReactionAddEvent event) {
 
 //        if (event.getTextChannel().equals(event.getGuild().getTextChannelById("726490100082409492"))) {
-//            event.getTextChannel().sendMessage(event.getReaction() + event.getReactionEmote().getAsCodepoints()).queue();
+//        event.getTextChannel().sendMessage(event.getReaction() + event.getReactionEmote().getAsCodepoints()).queue();
 //        }
 
         //Roles Management
@@ -119,37 +119,41 @@ public class ReactionListener extends ListenerAdapter {
             switch (event.getReactionEmote().getAsCodepoints()) {
                 //IR
                 case "U+1f1ee":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById("712376407790977024")).complete();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(712376407790977024L)).complete();
                     updateIR();
                     break;
                 //TC
                 case "U+1f1f9":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById("712376489580036178")).complete();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(712376489580036178L)).complete();
                     updateTC();
                     break;
                 //ZnD
                 case "U+1f1ff":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById("712376522257989803")).complete();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(712376522257989803L)).complete();
                     updateZnD();
                     break;
                 //RTM
                 case "U+1f1f7":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById("712376551622049882")).complete();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(712376551622049882L)).complete();
                     updateRTM();
                     break;
                 //TTT
                 case "U+1f1ec":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById("723908789648097284")).complete();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(723908789648097284L)).complete();
                     updateTTT();
                     break;
                 //OpenTTD
                 case "U+1f1f4":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById("723908821642379345")).complete();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(723908821642379345L)).complete();
                     updateOpenTTD();
                     break;
                 //Alpha
                 case "U+1f1e6":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById("744099514088030209")).complete();
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(744099514088030209L)).complete();
+                    break;
+                //LandOfSignals
+                case "U+1f1f1":
+                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(797155560725676052L)).complete();
                     break;
                 default:
                     break;
@@ -258,6 +262,10 @@ public class ReactionListener extends ListenerAdapter {
                 //Alpha
                 case "U+1f1e6":
                     event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("744099514088030209")).complete();
+                    break;
+                //LandOfSignals
+                case "U+1f1f1":
+                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(797155560725676052L)).complete();
                     break;
                 default:
                     break;
