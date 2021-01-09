@@ -22,6 +22,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class GoogleAuthorizeUtil {
+
+    private GoogleAuthorizeUtil() {
+    }
+
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);

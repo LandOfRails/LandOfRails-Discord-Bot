@@ -36,7 +36,7 @@ public class CommandUpdateVersion implements Command {
                 if (m.getShortcut().equalsIgnoreCase(args[1])) {
                     if (IsAllowed(author, args[1])) {
                         model.Pair<Boolean, String> returned = updateVerison(m, args[2]);
-                        if (!returned.getLeft()) {
+                        if (Boolean.FALSE.equals(returned.getLeft())) {
                             event.getChannel().sendMessage("Please specify a higher version than " + returned.getRight()).queue();
                         } else
                             event.getChannel().sendMessage("Modpack has been updated to version " + returned.getRight() + ". Please also remember to change the link and version in the TechnicLauncher.").queue();

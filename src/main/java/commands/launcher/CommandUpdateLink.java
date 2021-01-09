@@ -38,14 +38,15 @@ public class CommandUpdateLink implements Command {
                         String result = "";
                         try {
                             String version = m.getModpackVersion();
-                            System.out.println(version);
                             String[] versionNumbers = version.split("\\.");
                             int lastNumber = Integer.parseInt(versionNumbers[versionNumbers.length - 1]);
                             result = "";
+                            StringBuilder bld = new StringBuilder();
                             for (int i = 0; i < versionNumbers.length - 1; i++) {
-                                result += versionNumbers[i] + ".";
+                                bld.append(versionNumbers[i] + ".");
                             }
-                            result += (lastNumber + 1);
+                            bld.append(lastNumber + 1);
+                            result = bld.toString();
                         } catch (Exception e) {
                             result = "Error getModpackVersion";
                         } finally {
@@ -63,40 +64,6 @@ public class CommandUpdateLink implements Command {
                     e.printStackTrace();
                 }
             }
-//            switch (args[1].toLowerCase()) {
-//                case "tc":
-//                    if (IsAllowed(Container.LauncherPermissionListTC, author)) {
-//                        updateLink("traincraft", args[2]);
-//                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion tc " + getGreaterModpackVersion("traincraft")).queue();
-//                    } else {
-//                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
-//                    }
-//                    break;
-//                case "ir":
-//                    if (IsAllowed(Container.LauncherPermissionListIR, author)) {
-//                        updateLink("immersive_railroading_freebuild", args[2]);
-//                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion ir " + getGreaterModpackVersion("immersive_railroading_freebuild")).queue();
-//                    } else {
-//                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
-//                    }
-//                    break;
-//                case "znd":
-//                    if (IsAllowed(Container.LauncherPermissionListZnD, author)) {
-//                        updateLink("zoranodensha", args[2]);
-//                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion znd " + getGreaterModpackVersion("zoranodensha")).queue();
-//                    } else {
-//                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
-//                    }
-//                    break;
-//                case "rtm":
-//                    if (IsAllowed(Container.LauncherPermissionListRTM, author)) {
-//                        updateLink("realtrainmod", args[2]);
-//                        event.getChannel().sendMessage("Download link changed. Remember to also change the version to push an update. **Suggestion:** !updateVersion rtm " + getGreaterModpackVersion("realtrainmod")).queue();
-//                    } else {
-//                        event.getChannel().sendMessage("You don't have permission to use this command.").queue();
-//                    }
-//                    break;
-//            }
         }
     }
 }

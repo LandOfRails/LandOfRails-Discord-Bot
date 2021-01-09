@@ -17,6 +17,10 @@ import java.util.Scanner;
 
 public class LauncherModpackUtils {
 
+    private LauncherModpackUtils() {
+
+    }
+
     public static int CompareVersions(String version1, String version2) {
         String[] string1Vals = version1.split("\\.");
         String[] string2Vals = version2.split("\\.");
@@ -65,7 +69,6 @@ public class LauncherModpackUtils {
             rs.last();
             stmt.close();
             conn.close();
-            System.out.println(rs.getRow());
             return rs.getRow() == 1;
         } catch (SQLException throwables) {
             throwables.printStackTrace();

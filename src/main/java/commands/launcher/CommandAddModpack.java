@@ -72,14 +72,6 @@ public class CommandAddModpack implements Command {
                 String response = "\"" + organisationText + "\" ist keine gültige Zahl!";
                 channel.sendMessage(response).queue();
             } else {
-                /** @formatter:off
-                 *
-                 *  TODO:
-                 *  Eingaben verifizieren
-                 *  Modpack verarbeiten
-                 *
-                 *  @formatter:on
-                 */
 
                 Modpack modpack = new Modpack(name, title, shortcut, modpackVersion, mcVersion, organisation, key,
                         locationOnServer, imageUrl, downloadedImage);

@@ -161,42 +161,38 @@ public class ReactionListener extends ListenerAdapter {
         }
 
         //Bot confirmation
-        if (event.getMessageId().equals("726557812796424283")) {
-            if (event.getReactionEmote().getName().equals("hmmm")) {
-                //Change roles
-                event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(526509036859031552L)).complete();
-                event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(726558387625787452L)).complete();
+        if (event.getMessageId().equals("726557812796424283") && event.getReactionEmote().getName().equals("hmmm")) {
+            //Change roles
+            event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(526509036859031552L)).complete();
+            event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(726558387625787452L)).complete();
 
-                //Delete reaction
-                event.getReaction().removeReaction(event.getUser()).complete();
-            }
+            //Delete reaction
+            event.getReaction().removeReaction(event.getUser()).complete();
         }
 
-        if (event.getMessageIdLong() == 794590774566191145L) {
-            if (event.getReactionEmote().getAsCodepoints().equals("U+2705")) {
-                try {
-                    Connection conn = Container.getConnection();
-                    Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM teamRulesAccepted WHERE MemberID=" + event.getMember().getId());
-                    rs.last();
-                    DateFormat dtf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-                    if (rs.getRow() == 0) {
-                        Timestamp time = new Timestamp(System.currentTimeMillis());
-                        PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO teamRulesAccepted (MemberID, MemberUsername, Timestamp) VALUES (" + event.getMember().getId() + ", '" + event.getUser().getName() + "', ?)");
-                        stmt2.setTimestamp(1, time);
-                        stmt2.execute();
-                        event.getChannel().sendMessage(event.getMember().getAsMention() + " accepted the rules on " + dtf.format(time)).complete().delete().queueAfter(10, TimeUnit.SECONDS);
-                        event.getReaction().removeReaction(event.getUser()).complete();
-                        stmt2.close();
-                    } else {
-                        event.getReaction().removeReaction(event.getUser()).complete();
-                        event.getChannel().sendMessage(event.getMember().getAsMention() + " already accepted the rules on " + dtf.format(rs.getDate("Timestamp"))).complete().delete().queueAfter(10, TimeUnit.SECONDS);
-                    }
-                    stmt.close();
-                    conn.close();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+        if (event.getMessageIdLong() == 794590774566191145L && event.getReactionEmote().getAsCodepoints().equals("U+2705")) {
+            try {
+                Connection conn = Container.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM teamRulesAccepted WHERE MemberID=" + event.getMember().getId());
+                rs.last();
+                DateFormat dtf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+                if (rs.getRow() == 0) {
+                    Timestamp time = new Timestamp(System.currentTimeMillis());
+                    PreparedStatement stmt2 = conn.prepareStatement("INSERT INTO teamRulesAccepted (MemberID, MemberUsername, Timestamp) VALUES (" + event.getMember().getId() + ", '" + event.getUser().getName() + "', ?)");
+                    stmt2.setTimestamp(1, time);
+                    stmt2.execute();
+                    event.getChannel().sendMessage(event.getMember().getAsMention() + " accepted the rules on " + dtf.format(time)).complete().delete().queueAfter(10, TimeUnit.SECONDS);
+                    event.getReaction().removeReaction(event.getUser()).complete();
+                    stmt2.close();
+                } else {
+                    event.getReaction().removeReaction(event.getUser()).complete();
+                    event.getChannel().sendMessage(event.getMember().getAsMention() + " already accepted the rules on " + dtf.format(rs.getDate("Timestamp"))).complete().delete().queueAfter(10, TimeUnit.SECONDS);
                 }
+                stmt.close();
+                conn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         }
 
