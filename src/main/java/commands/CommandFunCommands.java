@@ -33,6 +33,9 @@ public class CommandFunCommands implements Command, Aliases {
         map.put("banana", "https://di.phncdn.com/www-static/images/pornhubAwards/banana.gif?cache=2020121204");
         map.put("redfish", "https://media.discordapp.net/attachments/532648338391040031/634736034743058462/618626677995733009.gif");
         map.put("steamlocomotive", getSteamLoco());
+        map.put("thomas", "https://tenor.com/view/thomas-in-hell-thomas-the-train-fire-gif-15403634");
+        map.put("nugget", "https://media.discordapp.net/attachments/505765732840243211/783755095962681348/image0-1-2.gif");
+        map.put("tiger", "https://cdn.discordapp.com/attachments/581602258102517760/798280602641367050/Ausbilder_geht_Gassi.gif");
         // @formatter:on
 	}
 
