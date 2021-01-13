@@ -20,5 +20,6 @@ public class StartStopListener extends ListenerAdapter {
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
         Container.setGuild(event.getJDA().getGuildById(394112479283904512L));
+        ReactionListener.checkIfReacted();
     }
 }

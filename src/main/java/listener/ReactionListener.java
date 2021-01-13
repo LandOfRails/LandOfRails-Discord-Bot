@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import commands.utils.LauncherModpackUtils;
 import model.Modpack;
 import model.Triple;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -21,12 +22,35 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ReactionListener extends ListenerAdapter {
 
     private List<MessageReaction> lmr = null;
+
+    private static final HashMap<String, Long> rolesList = new HashMap<String, Long>() {{
+        //IR
+        put("U+1f1ee", 712376407790977024L);
+        //TC
+        put("U+1f1f9", 712376489580036178L);
+        //ZnD
+        put("U+1f1ff", 712376522257989803L);
+        //RTM
+        put("U+1f1f7", 712376551622049882L);
+        //TTT
+        put("U+1f1ec", 723908789648097284L);
+        //OpenTTD
+        put("U+1f1f4", 723908821642379345L);
+        //Alpha
+        put("U+1f1e6", 744099514088030209L);
+        //LandOfSignals
+        put("U+1f1f1", 797155560725676052L);
+    }};
+
+    private static final long messageID = 712375636009943070L;
+    private static final long channelID = 575451408195780618L;
 
     private void updateIR() {
         for (MessageReaction mr : lmr) {
@@ -114,54 +138,23 @@ public class ReactionListener extends ListenerAdapter {
 //        }
 
         //Roles Management
-        if (event.getMessageId().equals("712375636009943070")) {
-            lmr = event.getTextChannel().retrieveMessageById("712375636009943070").complete().getReactions();
-            switch (event.getReactionEmote().getAsCodepoints()) {
-                //IR
-                case "U+1f1ee":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(712376407790977024L)).complete();
-                    updateIR();
-                    break;
-                //TC
-                case "U+1f1f9":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(712376489580036178L)).complete();
-                    updateTC();
-                    break;
-                //ZnD
-                case "U+1f1ff":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(712376522257989803L)).complete();
-                    updateZnD();
-                    break;
-                //RTM
-                case "U+1f1f7":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(712376551622049882L)).complete();
-                    updateRTM();
-                    break;
-                //TTT
-                case "U+1f1ec":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(723908789648097284L)).complete();
-                    updateTTT();
-                    break;
-                //OpenTTD
-                case "U+1f1f4":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(723908821642379345L)).complete();
-                    updateOpenTTD();
-                    break;
-                //Alpha
-                case "U+1f1e6":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(744099514088030209L)).complete();
-                    break;
-                //LandOfSignals
-                case "U+1f1f1":
-                    event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(797155560725676052L)).complete();
-                    break;
-                default:
-                    break;
+        Member member = event.getMember();
+        if (member != null && event.getMessageIdLong() == messageID && !event.getUser().isBot()) {
+            lmr = event.getTextChannel().retrieveMessageById(712375636009943070L).complete().getReactions();
+            String emoteCodepoints = event.getReactionEmote().getAsCodepoints();
+            updateIR();
+            updateOpenTTD();
+            updateRTM();
+            updateTC();
+            updateZnD();
+            updateTTT();
+            if (rolesList.containsKey(emoteCodepoints)) {
+                event.getGuild().addRoleToMember(member, event.getGuild().getRoleById(rolesList.get(emoteCodepoints))).complete();
             }
         }
 
         //Bot confirmation
-        if (event.getMessageId().equals("726557812796424283") && event.getReactionEmote().getName().equals("hmmm")) {
+        if (event.getMessageIdLong() == 726557812796424283L && event.getReactionEmote().getName().equals("hmmm")) {
             //Change roles
             event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(526509036859031552L)).complete();
             event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(726558387625787452L)).complete();
@@ -222,50 +215,26 @@ public class ReactionListener extends ListenerAdapter {
     public void onMessageReactionRemove(@Nonnull MessageReactionRemoveEvent event) {
 
         //Roles Management
-        if (event.getMessageId().equals("712375636009943070")) {
-            lmr = event.getTextChannel().retrieveMessageById("712375636009943070").complete().getReactions();
-            switch (event.getReactionEmote().getAsCodepoints()) {
-                //IR
-                case "U+1f1ee":
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("712376407790977024")).complete();
-                    updateIR();
-                    break;
-                //TC
-                case "U+1f1f9":
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("712376489580036178")).complete();
-                    updateTC();
-                    break;
-                //ZnD
-                case "U+1f1ff":
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("712376522257989803")).complete();
-                    updateZnD();
-                    break;
-                //RTM
-                case "U+1f1f7":
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("712376551622049882")).complete();
-                    updateRTM();
-                    break;
-                //TTT
-                case "U+1f1ec":
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("723908789648097284")).complete();
-                    updateTTT();
-                    break;
-                //OpenTTD
-                case "U+1f1f4":
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("723908821642379345")).complete();
-                    updateOpenTTD();
-                    break;
-                //Alpha
-                case "U+1f1e6":
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById("744099514088030209")).complete();
-                    break;
-                //LandOfSignals
-                case "U+1f1f1":
-                    event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(797155560725676052L)).complete();
-                    break;
-                default:
-                    break;
+        Member member = event.getMember();
+        if (member != null && event.getMessageIdLong() == messageID && !event.getUser().isBot()) {
+            lmr = event.getTextChannel().retrieveMessageById(712375636009943070L).complete().getReactions();
+            String emoteCodepoints = event.getReactionEmote().getAsCodepoints();
+            updateIR();
+            updateOpenTTD();
+            updateRTM();
+            updateTC();
+            updateZnD();
+            updateTTT();
+            if (rolesList.containsKey(emoteCodepoints)) {
+                event.getGuild().removeRoleFromMember(member, event.getGuild().getRoleById(rolesList.get(emoteCodepoints))).complete();
             }
+        }
+    }
+
+    public static void checkIfReacted() {
+        Message m = Container.getGuild().getTextChannelById(channelID).retrieveMessageById(messageID).complete();
+        for (String s : rolesList.keySet()) {
+            m.addReaction(s).complete();
         }
     }
 }
