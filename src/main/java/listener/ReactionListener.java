@@ -24,32 +24,40 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class ReactionListener extends ListenerAdapter {
 
     private List<MessageReaction> lmr = null;
 
-    private static final HashMap<String, Long> rolesList = new HashMap<String, Long>() {{
-        //IR
-        put("U+1f1ee", 712376407790977024L);
-        //TC
-        put("U+1f1f9", 712376489580036178L);
-        //ZnD
-        put("U+1f1ff", 712376522257989803L);
-        //RTM
-        put("U+1f1f7", 712376551622049882L);
-        //TTT
-        put("U+1f1ec", 723908789648097284L);
-        //OpenTTD
-        put("U+1f1f4", 723908821642379345L);
-        //Alpha
-        put("U+1f1e6", 744099514088030209L);
-        //LandOfSignals
-        put("U+1f1f1", 797155560725676052L);
-    }};
+    /**
+     * <MessageID, HashMap<EmojiCodepoints, RoleID>>
+     */
+    private static final HashMap<Long, HashMap<String, Long>> rolesList = new HashMap<Long, HashMap<String, Long>>() {{
+        //L A N G U A G E S
+        put(712375636009943070L, new HashMap<String, Long>() {{
+            //IR
+            put("U+1f1ee", 712376407790977024L);
+            //TC
+            put("U+1f1f9", 712376489580036178L);
+            //ZnD
+            put("U+1f1ff", 712376522257989803L);
+            //RTM
+            put("U+1f1f7", 712376551622049882L);
+            //TTT
+            put("U+1f1ec", 723908789648097284L);
+            //OpenTTD
+            put("U+1f1f4", 723908821642379345L);
+            //Alpha
+            put("U+1f1e6", 744099514088030209L);
+            //LandOfSignals
+            put("U+1f1f1", 797155560725676052L);
+        }});
 
-    private static final long messageID = 712375636009943070L;
+        //O T H E R
+    }};
+    
     private static final long channelID = 575451408195780618L;
 
     private void updateIR() {
@@ -139,17 +147,19 @@ public class ReactionListener extends ListenerAdapter {
 
         //Roles Management
         Member member = event.getMember();
-        if (member != null && event.getMessageIdLong() == messageID && !event.getUser().isBot()) {
+        Long messageID = event.getMessageIdLong();
+        if (member != null && rolesList.containsKey(messageID) && !event.getUser().isBot()) {
             lmr = event.getTextChannel().retrieveMessageById(712375636009943070L).complete().getReactions();
-            String emoteCodepoints = event.getReactionEmote().getAsCodepoints();
+            String codepoints = event.getReactionEmote().getAsCodepoints();
+            HashMap<String, Long> roles = rolesList.get(messageID);
             updateIR();
             updateOpenTTD();
             updateRTM();
             updateTC();
             updateZnD();
             updateTTT();
-            if (rolesList.containsKey(emoteCodepoints)) {
-                event.getGuild().addRoleToMember(member, event.getGuild().getRoleById(rolesList.get(emoteCodepoints))).complete();
+            if (roles.containsKey(codepoints)) {
+                event.getGuild().addRoleToMember(member, event.getGuild().getRoleById(roles.get(codepoints))).complete();
             }
         }
 
@@ -216,25 +226,30 @@ public class ReactionListener extends ListenerAdapter {
 
         //Roles Management
         Member member = event.getMember();
-        if (member != null && event.getMessageIdLong() == messageID && !event.getUser().isBot()) {
+        Long messageID = event.getMessageIdLong();
+        if (member != null && rolesList.containsKey(messageID) && !event.getUser().isBot()) {
             lmr = event.getTextChannel().retrieveMessageById(712375636009943070L).complete().getReactions();
-            String emoteCodepoints = event.getReactionEmote().getAsCodepoints();
+            String codepoints = event.getReactionEmote().getAsCodepoints();
+            HashMap<String, Long> roles = rolesList.get(messageID);
             updateIR();
             updateOpenTTD();
             updateRTM();
             updateTC();
             updateZnD();
             updateTTT();
-            if (rolesList.containsKey(emoteCodepoints)) {
-                event.getGuild().removeRoleFromMember(member, event.getGuild().getRoleById(rolesList.get(emoteCodepoints))).complete();
+            if (roles.containsKey(codepoints)) {
+                event.getGuild().removeRoleFromMember(member, event.getGuild().getRoleById(roles.get(codepoints))).complete();
             }
         }
     }
 
     public static void checkIfReacted() {
-        Message m = Container.getGuild().getTextChannelById(channelID).retrieveMessageById(messageID).complete();
-        for (String s : rolesList.keySet()) {
-            m.addReaction(s).complete();
+        for (Long l : rolesList.keySet()) {
+            Message m = Container.getGuild().getTextChannelById(channelID).retrieveMessageById(l).complete();
+            Set<String> roles = rolesList.get(l).keySet();
+            for (String s : roles) {
+                m.addReaction(s).complete();
+            }
         }
     }
 }
