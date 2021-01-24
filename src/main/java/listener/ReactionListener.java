@@ -35,7 +35,7 @@ public class ReactionListener extends ListenerAdapter {
      * <MessageID, HashMap<EmojiCodepoints, RoleID>>
      */
     private static final HashMap<Long, HashMap<String, Long>> rolesList = new HashMap<Long, HashMap<String, Long>>() {{
-        //L A N G U A G E S
+        //R O L E S
         put(712375636009943070L, new HashMap<String, Long>() {{
             //IR
             put("U+1f1ee", 712376407790977024L);
@@ -57,7 +57,7 @@ public class ReactionListener extends ListenerAdapter {
 
         //O T H E R
     }};
-    
+
     private static final long channelID = 575451408195780618L;
 
     private void updateIR() {
