@@ -1,4 +1,5 @@
 import handler.GoogleAuthorizeUtil;
+import handler.LocalSafeHandler;
 import handler.TimerTasks;
 import listener.MessageListener;
 import listener.ReactionListener;
@@ -47,6 +48,9 @@ public class Main implements EventListener {
         builder.addEventListeners(new ReactionListener());
         builder.addEventListeners(new StartStopListener());
         builder.setActivity(Activity.playing("with trains."));
+
+        // Daten laden
+        LocalSafeHandler.loadData(Container.VotingFile, Container.ActiveVotings);
 
         // DB
         new Container("jdbc:mariadb://landofrails.net:3306/discord-bot?user=discord-bot&password="
