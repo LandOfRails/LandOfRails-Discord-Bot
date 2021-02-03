@@ -1,5 +1,9 @@
 package handler;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import model.ServerState;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -9,11 +13,12 @@ import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import storage.Container;
 
 import java.awt.*;
+import java.io.File;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class TimerTasks {
@@ -91,4 +96,89 @@ public class TimerTasks {
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
     }
 
+    private String stateTC = Container.getGuild().getVoiceChannelById(806319039831605269L).getName();
+    private String stateIR = Container.getGuild().getVoiceChannelById(806319545279053844L).getName();
+    private String stateZND = Container.getGuild().getVoiceChannelById(806319634998362142L).getName();
+    private String stateRTM = Container.getGuild().getVoiceChannelById(806319668344127538L).getName();
+
+    public void updateStatus() {
+
+        TimerTask repeatedTask = new TimerTask() {
+
+            @Override
+            public void run() {
+
+                List<ServerState> states = getStatesList();
+                for (ServerState state : states) {
+                    String tempState = state.getState();
+                    switch (state.getUuid()) {
+
+                        //IR
+                        case "8b2512df-5763-4ef8-9886-133bc8a11095":
+                            if (!stateIR.contains(tempState)) {
+                                stateIR = tempState;
+                                Container.getGuild().getVoiceChannelById(806319545279053844L).getManager().setName("IR: " + tempState).queue();
+                            }
+                            break;
+
+                        //TC
+                        case "d7f261eb-22a4-4b8e-b763-4f452a646157":
+                            if (!stateTC.contains(tempState)) {
+                                stateTC = tempState;
+                                Container.getGuild().getVoiceChannelById(806319039831605269L).getManager().setName("TC: " + tempState).queue();
+                            }
+                            break;
+
+                        //ZnD
+                        case "0996687f-22f0-4946-addc-ba9e46cb2bd0":
+                            if (!stateZND.contains(tempState)) {
+                                stateZND = tempState;
+                                Container.getGuild().getVoiceChannelById(806319634998362142L).getManager().setName("ZnD: team only (" + tempState + ")").queue();
+                            }
+                            break;
+
+                        //RTM
+                        case "0f67780a-465c-4139-9e51-17a4639ddbc0":
+                            if (!stateRTM.contains(tempState)) {
+                                stateRTM = tempState;
+                                Container.getGuild().getVoiceChannelById(806319668344127538L).getManager().setName("RTM: team only (" + tempState + ")").queue();
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+            }
+        };
+        Timer timer = new Timer("Timer");
+
+        long delay = 1000L;
+        long period = 1000L * 10L;
+        timer.scheduleAtFixedRate(repeatedTask, delay, period);
+    }
+
+    private List<ServerState> getStatesList() {
+        String json = "";
+        File jsonFile = new File("/var/lib/pterodactyl/states.json");
+        try {
+            Scanner s = new Scanner(jsonFile);
+            while (s.hasNextLine()) {
+                json += s.nextLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<ServerState> serverStates = new ArrayList<>();
+
+        JsonElement element = JsonParser.parseString(json);
+        JsonObject obj = element.getAsJsonObject();
+        Set<Map.Entry<String, JsonElement>> entries = obj.entrySet();
+        for (Map.Entry<String, JsonElement> entry : entries) {
+            serverStates.add(new ServerState(entry.getKey(), entry.getValue().getAsString()));
+        }
+        return serverStates;
+    }
 }

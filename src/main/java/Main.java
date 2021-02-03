@@ -62,6 +62,7 @@ public class Main implements EventListener {
         // TimerTasks starten
         TimerTasks tt = new TimerTasks();
         tt.checkActiveVotings();
+        tt.updateStatus();
     }
 
     @Override
