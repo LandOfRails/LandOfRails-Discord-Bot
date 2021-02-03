@@ -96,10 +96,10 @@ public class TimerTasks {
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
     }
 
-    private String stateTC = Container.getGuild().getVoiceChannelById(806319039831605269L).getName();
-    private String stateIR = Container.getGuild().getVoiceChannelById(806319545279053844L).getName();
-    private String stateZND = Container.getGuild().getVoiceChannelById(806319634998362142L).getName();
-    private String stateRTM = Container.getGuild().getVoiceChannelById(806319668344127538L).getName();
+    private String stateTC = "null";
+    private String stateIR = "null";
+    private String stateZND = "null";
+    private String stateRTM = "null";
 
     public void updateStatus() {
 
@@ -115,7 +115,7 @@ public class TimerTasks {
 
                         //IR
                         case "8b2512df-5763-4ef8-9886-133bc8a11095":
-                            if (!stateIR.contains(tempState)) {
+                            if (!stateIR.equals(tempState)) {
                                 stateIR = tempState;
                                 Container.getGuild().getVoiceChannelById(806319545279053844L).getManager().setName("IR: " + tempState).queue();
                             }
@@ -123,7 +123,7 @@ public class TimerTasks {
 
                         //TC
                         case "d7f261eb-22a4-4b8e-b763-4f452a646157":
-                            if (!stateTC.contains(tempState)) {
+                            if (!stateTC.equals(tempState)) {
                                 stateTC = tempState;
                                 Container.getGuild().getVoiceChannelById(806319039831605269L).getManager().setName("TC: " + tempState).queue();
                             }
@@ -131,7 +131,7 @@ public class TimerTasks {
 
                         //ZnD
                         case "0996687f-22f0-4946-addc-ba9e46cb2bd0":
-                            if (!stateZND.contains(tempState)) {
+                            if (!stateZND.equals(tempState)) {
                                 stateZND = tempState;
                                 Container.getGuild().getVoiceChannelById(806319634998362142L).getManager().setName("ZnD: team only (" + tempState + ")").queue();
                             }
@@ -139,7 +139,7 @@ public class TimerTasks {
 
                         //RTM
                         case "0f67780a-465c-4139-9e51-17a4639ddbc0":
-                            if (!stateRTM.contains(tempState)) {
+                            if (!stateRTM.equals(tempState)) {
                                 stateRTM = tempState;
                                 Container.getGuild().getVoiceChannelById(806319668344127538L).getManager().setName("RTM: team only (" + tempState + ")").queue();
                             }
