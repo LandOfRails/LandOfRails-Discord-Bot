@@ -5,6 +5,7 @@ import java.util.List;
 
 import commands.CommandAFK;
 import commands.CommandAbstimmung;
+import commands.CommandCertificates;
 import commands.CommandFunCommands;
 import commands.CommandHelp;
 import commands.CommandIdea;
@@ -44,6 +45,7 @@ public class CommandList {
 		commands.add(new CommandUpdateImageLink());
 		commands.add(new CommandAddModpack());
 		commands.add(new CommandRemoveModpack());
+		commands.add(new CommandCertificates());
 	}
 
 	public List<Command> getCommands() {
