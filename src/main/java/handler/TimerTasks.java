@@ -32,7 +32,7 @@ public class TimerTasks {
                 TextChannel textChannel = Container.getGuild().getTextChannelById(485879824540499969L);
                 for (int i = 0; i < Container.ActiveVotings.size(); i++) {
                     Long id = Container.ActiveVotings.get(i);
-                    logger.info("Nachricht (" + id + ") wird �berpr�ft...");
+                    logger.info("Nachricht (" + id + ") wird überprüft...");
                     try {
                         Message m = textChannel.retrieveMessageById(id).complete();
                         OffsetDateTime odt = null;
@@ -40,7 +40,7 @@ public class TimerTasks {
                             odt = me.getTimestamp();
                         }
                         if (ChronoUnit.SECONDS.between(odt.toInstant(), Instant.now()) > 1) {
-                            // Abstimmung schließen
+                            // Abstimmung schlieÃŸen
                             for (MessageEmbed me : m.getEmbeds()) {
                                 EmbedBuilder embedBuilder = new EmbedBuilder();
                                 embedBuilder.setFooter("Abstimmung beendet.");
@@ -82,7 +82,7 @@ public class TimerTasks {
                             }
                         }
                     } catch (ErrorResponseException e) {
-                        logger.severe("Nachricht nicht mehr gefunden. \n " + id + " wird aus der Liste gelöscht...");
+                        logger.severe("Nachricht nicht mehr gefunden. \n " + id + " wird aus der Liste gelÃ¶scht...");
                         Container.ActiveVotings.remove(i);
                         i--;
                     }

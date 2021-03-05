@@ -6,9 +6,7 @@ import com.google.gson.Gson;
 import commands.utils.LauncherModpackUtils;
 import model.Modpack;
 import model.Triple;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -212,9 +210,9 @@ public class ReactionListener extends ListenerAdapter {
                         } catch (final Exception e) {
                             e.printStackTrace();
                         }
-                        event.getChannel().sendMessage("Modpack \"" + p.getRight().getTitle() + "\" gelöscht.").queue();
+                        event.getChannel().sendMessage("Modpack \"" + p.getRight().getTitle() + "\" gelÃ¶scht.").queue();
                     } else {
-                        event.getChannel().sendMessage("Löschen abgebrochen.").queue();
+                        event.getChannel().sendMessage("LÃ¶schen abgebrochen.").queue();
                     }
                 }
             }
@@ -249,6 +247,38 @@ public class ReactionListener extends ListenerAdapter {
             Set<String> roles = rolesList.get(l).keySet();
             for (String s : roles) {
                 m.addReaction(s).complete();
+            }
+        }
+    }
+
+    public static void checkIfUsersGotRole() {
+        for (Long l : rolesList.keySet()) { //Go through all messages
+            Message m = Container.getGuild().getTextChannelById(channelID).retrieveMessageById(l).complete();
+            List<MessageReaction> lmr = m.getReactions();
+            for (MessageReaction mr : lmr) { //Go through all the reactions of the message
+                Long roleID = rolesList.get(l).get(mr.getReactionEmote().getAsCodepoints());
+                if (roleID != null) {
+                    List<User> lu = mr.retrieveUsers().complete();
+                    for (User u : lu) { //All users who have responded to this go through
+                        if (!u.isBot()) {
+                            Guild g = mr.getGuild();
+                            try {
+                                Member mb = g.retrieveMember(u).complete();
+                                List<Role> lr = mb.getRoles();
+                                boolean roleFound = false;
+                                for (Role r : lr) {
+                                    if (r.getIdLong() == roleID) {
+                                        roleFound = true;
+                                        break;
+                                    }
+                                }
+                                if (!roleFound) g.addRoleToMember(mb, g.getRoleById(roleID)).queue();
+                            } catch (Exception e) {
+
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -45,11 +45,11 @@ public class CommandAddModpack implements Command {
                     "Irgendwas ist da schiefgelaufen mmh, versuche es nochmal nach folgendem Aufbau:\n\n"
                             + "!addModpack **Universeller Name (ohne Leerzeichen, z.B. super_geiles_modpack)**\n"
                             + "**Titel der im Launcher angezeigt wird (z.B. SUPER GEILES MODPACK UNBEDINGT DOWNLOADEN)**\n"
-                            + "**Abkürzung (z.B. ir)**\n"
+                            + "**AbkÃ¼rzung (z.B. ir)**\n"
                             + "**MC Version (z.B. 1.12.2)**\n"
                             + "**Modpack Version (z.B. 1.0.3**\n"
                             + "**An welcher Position befindet sich das Modpack (Zahl)**\n"
-                            + "**Super geheimer Schlüssel (falls nicht benötigt einfach eine leere Zeile lassen)**\n"
+                            + "**Super geheimer SchlÃ¼ssel (falls nicht benÃ¶tigt einfach eine leere Zeile lassen)**\n"
                             + "**Download Link (genauso wie beim TechnicLauncher)**\n"
                             + "**Hintergrund Bild (Link)**\n"
                             + "**Icon vom Modpack wenn es heruntergeladen wurde (Link)**";
@@ -69,7 +69,7 @@ public class CommandAddModpack implements Command {
 
             Integer organisation = NumberUtils.toInt(organisationText, -1);
             if (organisation < 1) {
-                String response = "\"" + organisationText + "\" ist keine gültige Zahl!";
+                String response = "\"" + organisationText + "\" ist keine gÃ¼ltige Zahl!";
                 channel.sendMessage(response).queue();
             } else {
 

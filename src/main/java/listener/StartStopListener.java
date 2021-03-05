@@ -21,5 +21,6 @@ public class StartStopListener extends ListenerAdapter {
     public void onReady(@Nonnull ReadyEvent event) {
         Container.setGuild(event.getJDA().getGuildById(394112479283904512L));
         ReactionListener.checkIfReacted();
+        ReactionListener.checkIfUsersGotRole();
     }
 }
