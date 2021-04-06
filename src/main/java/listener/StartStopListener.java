@@ -14,7 +14,6 @@ public class StartStopListener extends ListenerAdapter {
     public void onShutdown(@Nonnull ShutdownEvent event) {
         LocalSafeHandler.saveData(Container.VotingFile, Container.ActiveVotings);
         System.exit(event.getCode());
-
     }
 
     @Override
