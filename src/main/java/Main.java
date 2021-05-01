@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import storage.Container;
+import utils.HibernateHelper;
 
 import javax.annotation.Nonnull;
 import javax.security.auth.login.LoginException;
@@ -67,6 +68,13 @@ public class Main implements EventListener {
 
         // JadenNotificater starten
         JadenNotificater.init();
+
+        HibernateHelper hibernateHelper = new HibernateHelper();
+        try {
+            hibernateHelper.setUp();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

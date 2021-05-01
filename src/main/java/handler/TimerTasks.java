@@ -4,13 +4,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import model.ServerState;
+import model.database.PollsEntity;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import storage.Container;
+import utils.HibernateHelper;
 
 import java.awt.*;
 import java.io.File;
@@ -96,6 +100,36 @@ public class TimerTasks {
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
     }
 
+    public void checkTeamVoting() {
+        TimerTask repeatedTask = new TimerTask() {
+            @Override
+            public void run() {
+                Session session = HibernateHelper.sessionFactory.openSession();
+
+                Query query = session.createQuery("from PollsEntity where teamVoting = 1 order by id DESC");
+                query.setMaxResults(1);
+                PollsEntity last = (PollsEntity) query.uniqueResult();
+
+                //4730400 seconds == 1.8 months / 54.75 days
+                Instant nowTwoMonthsAgo = new Date().toInstant().minusSeconds(4730400);
+                if (last == null || last.getEndDatetime().toInstant().isBefore(nowTwoMonthsAgo)) {
+                    Date now = new Date();
+                    TextChannel tc = Container.getGuild().getTextChannelById(836008800853950464L);
+                    TextChannel ir = Container.getGuild().getTextChannelById(836009186373533716L);
+                    TextChannel rtm = Container.getGuild().getTextChannelById(836009241855918180L);
+                    TextChannel znd = Container.getGuild().getTextChannelById(836009278439424030L);
+                }
+                session.getTransaction().commit();
+                session.close();
+            }
+        };
+        Timer timer = new Timer("Timer");
+
+        long delay = 1000L;
+        long period = 1000L * 60L * 10L;
+        timer.scheduleAtFixedRate(repeatedTask, delay, period);
+    }
+
     private String stateTC = "null";
     private String stateIR = "null";
     private String stateZND = "null";
@@ -162,23 +196,26 @@ public class TimerTasks {
     private List<ServerState> getStatesList() {
         String json = "";
         File jsonFile = new File("/var/lib/pterodactyl/states.json");
-        try {
-            Scanner s = new Scanner(jsonFile);
-            while (s.hasNextLine()) {
-                json += s.nextLine();
+        if (jsonFile.exists()) {
+            try {
+                Scanner s = new Scanner(jsonFile);
+                while (s.hasNextLine()) {
+                    json += s.nextLine();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        List<ServerState> serverStates = new ArrayList<>();
+            List<ServerState> serverStates = new ArrayList<>();
 
-        JsonElement element = JsonParser.parseString(json);
-        JsonObject obj = element.getAsJsonObject();
-        Set<Map.Entry<String, JsonElement>> entries = obj.entrySet();
-        for (Map.Entry<String, JsonElement> entry : entries) {
-            serverStates.add(new ServerState(entry.getKey(), entry.getValue().getAsString()));
+            JsonElement element = JsonParser.parseString(json);
+            JsonObject obj = element.getAsJsonObject();
+            Set<Map.Entry<String, JsonElement>> entries = obj.entrySet();
+            for (Map.Entry<String, JsonElement> entry : entries) {
+                serverStates.add(new ServerState(entry.getKey(), entry.getValue().getAsString()));
+            }
+            return serverStates;
         }
-        return serverStates;
+        return new ArrayList<>();
     }
 }

@@ -14,7 +14,8 @@ public class JadenNotificater {
     }
 
     public static final String PANEL = "https://panel.landofrails.net/";
-    public static final String WEBSITE = "https://www.landofrails.net/";
+    public static final String WEBSITE_WWW = "https://www.landofrails.net/";
+    public static final String WEBSITE = "https://landofrails.net/";
     public static final String MAILS = "https://mails.landofrails.net/";
     public static final String PHPMYADMIN = "https://phpmyadmin.landofrails.net/";
     public static final String WEBMIN = "https://webmin.landofrails.net/";
@@ -24,7 +25,7 @@ public class JadenNotificater {
 
     public static void init() {
 
-        testURLs(PANEL, WEBSITE, MAILS, PHPMYADMIN, WEBMIN, LAUNCHER);
+        testURLs(PANEL, WEBSITE_WWW, WEBSITE, MAILS, PHPMYADMIN, WEBMIN, LAUNCHER);
 
     }
 
@@ -67,7 +68,7 @@ public class JadenNotificater {
     }
 
     public static Map<String, LocalDate> getCertificateDates() {
-        List<String> arr = Arrays.asList(PANEL, WEBSITE, MAILS, PHPMYADMIN, WEBMIN, LAUNCHER);
+        List<String> arr = Arrays.asList(PANEL, WEBSITE_WWW, WEBSITE, MAILS, PHPMYADMIN, WEBMIN, LAUNCHER);
         Map<String, LocalDate> data = new HashMap<>();
 
         for (String link : arr) {
