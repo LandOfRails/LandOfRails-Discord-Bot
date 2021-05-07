@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import storage.Container;
 import utils.HibernateHelper;
 
@@ -106,19 +105,38 @@ public class TimerTasks {
             public void run() {
                 Session session = HibernateHelper.sessionFactory.openSession();
 
-                Query query = session.createQuery("from PollsEntity where teamVoting = 1 order by id DESC");
-                query.setMaxResults(1);
-                PollsEntity last = (PollsEntity) query.uniqueResult();
+                List<PollsEntity> pollsEntities = session.createQuery("from PollsEntity where teamVoting = 1 order by id DESC").setMaxResults(4).list();
 
                 //4730400 seconds == 1.8 months / 54.75 days
                 Instant nowTwoMonthsAgo = new Date().toInstant().minusSeconds(4730400);
-                if (last == null || last.getEndDatetime().toInstant().isBefore(nowTwoMonthsAgo)) {
-                    Date now = new Date();
-                    TextChannel tc = Container.getGuild().getTextChannelById(836008800853950464L);
-                    TextChannel ir = Container.getGuild().getTextChannelById(836009186373533716L);
-                    TextChannel rtm = Container.getGuild().getTextChannelById(836009241855918180L);
-                    TextChannel znd = Container.getGuild().getTextChannelById(836009278439424030L);
+                if (!pollsEntities.isEmpty())
+                    for (PollsEntity pe : pollsEntities) {
+                        if (pe.getEndDatetime().toInstant().isBefore(nowTwoMonthsAgo)) {
+                            switch (pe.getQuestion()) {
+                                case "Traincraft":
+                                    break;
+                                case "Immersive Railroading":
+                                    break;
+                                case "Real Train Mod":
+                                    break;
+                                case "Zora no Densha":
+                                    break;
+                                default:
+                                    continue;
+                            }
+                        }
+                    }
+                else {
+
                 }
+
+//                if (last == null || last.getEndDatetime().toInstant().isBefore(nowTwoMonthsAgo)) {
+//                    Date now = new Date();
+//                    TextChannel tc = Container.getGuild().getTextChannelById(836008800853950464L);
+//                    TextChannel ir = Container.getGuild().getTextChannelById(836009186373533716L);
+//                    TextChannel rtm = Container.getGuild().getTextChannelById(836009241855918180L);
+//                    TextChannel znd = Container.getGuild().getTextChannelById(836009278439424030L);
+//                }
                 session.getTransaction().commit();
                 session.close();
             }

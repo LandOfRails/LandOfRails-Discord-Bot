@@ -41,6 +41,7 @@ public class MessageListener extends ListenerAdapter {
         if (!memberFound) {
             UsersEntity usersEntity = new UsersEntity();
             usersEntity.setMemberId(event.getMember().getIdLong());
+            usersEntity.setDiscordName(event.getMember().getEffectiveName());
             usersEntity.setMessageCount(1);
             session.save(usersEntity);
         }

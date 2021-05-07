@@ -20,7 +20,7 @@ public class CustomTimer {
 
     // Constants
     private static final String OWNER = "Owner";
-    private static final long MANAGEMENT = 544172771404677120l;
+    private static final long MANAGEMENT = 544172771404677120L;
     private static final LocalTime TIME = LocalTime.of(16, 0);
 
     // Timer

@@ -6,12 +6,24 @@ import java.util.Objects;
 @Entity
 @Table(name = "PollOptions", schema = "lor-discord-bot", catalog = "")
 public class PollOptionsEntity {
+    private int id;
+    private int fkPollId;
     private String voteOption;
     private int votes;
     private PollsEntity pollsByFkPollId;
 
+    @Id
+    @Column(name = "ID", nullable = false)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Basic
-    @Column(name = "VoteOption")
+    @Column(name = "VoteOption", nullable = false, length = -1)
     public String getVoteOption() {
         return voteOption;
     }
@@ -21,7 +33,7 @@ public class PollOptionsEntity {
     }
 
     @Basic
-    @Column(name = "Votes")
+    @Column(name = "Votes", nullable = false)
     public int getVotes() {
         return votes;
     }
@@ -35,12 +47,12 @@ public class PollOptionsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PollOptionsEntity that = (PollOptionsEntity) o;
-        return votes == that.votes && Objects.equals(voteOption, that.voteOption);
+        return id == that.id && fkPollId == that.fkPollId && votes == that.votes && Objects.equals(voteOption, that.voteOption);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(voteOption, votes);
+        return Objects.hash(id, fkPollId, voteOption, votes);
     }
 
     @ManyToOne

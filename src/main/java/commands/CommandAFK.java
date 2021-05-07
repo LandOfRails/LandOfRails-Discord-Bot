@@ -161,7 +161,7 @@ public class CommandAFK implements Command, Aliases {
 
 	/**
 	 * 
-	 * Gibt die höchsten zwei Zeiteinheiten zurück
+	 * Gibt die hÃ¶chsten zwei Zeiteinheiten zurÃ¼ck
 	 * 1 day and 13 hours (1 Tag, 13 Stunden, X Minuten, X Sekunden)
 	 * 12 hours and 1 minute (0 Tage, 12 Stunden, 1 Minute, X Sekunden)
 	 * 43 minutes and 3 seconds (0 Tage, 0 Stunden, 43 Minuten, 3 Sekunden)

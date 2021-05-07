@@ -1,7 +1,6 @@
 import handler.GoogleAuthorizeUtil;
 import handler.LocalSafeHandler;
 import handler.TimerTasks;
-import jadennotificater.JadenNotificater;
 import listener.MessageListener;
 import listener.ReactionListener;
 import listener.ServerListener;
@@ -63,11 +62,11 @@ public class Main implements EventListener {
 
         // TimerTasks starten
         TimerTasks tt = new TimerTasks();
-        tt.checkActiveVotings();
-        tt.updateStatus();
+//        tt.checkActiveVotings();
+//        tt.updateStatus();
 
         // JadenNotificater starten
-        JadenNotificater.init();
+//        JadenNotificater.init();
 
         HibernateHelper hibernateHelper = new HibernateHelper();
         try {

@@ -6,7 +6,7 @@ plugins {
 
 mainClassName = "Main"
 
-def jdaVersion = '4.2.1_254'
+def jdaVersion = '4.2.1_262'
 
 group 'net.landofrails'
 version '1.0-SNAPSHOT'
