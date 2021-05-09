@@ -3,18 +3,14 @@ package listener;
 import commands.handler.CommandList;
 import commands.interfaces.Aliases;
 import commands.interfaces.Command;
-import model.database.UsersEntity;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.hibernate.Session;
 import storage.Container;
-import utils.HibernateHelper;
 
 import javax.annotation.Nonnull;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MessageListener extends ListenerAdapter {
@@ -26,26 +22,6 @@ public class MessageListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
-
-        Session session = HibernateHelper.sessionFactory.openSession();
-        session.beginTransaction();
-        List<UsersEntity> result = session.createQuery("from  UsersEntity").list();
-        boolean memberFound = false;
-        for (UsersEntity ue : result) {
-            if (ue.getMemberId() == event.getMember().getIdLong()) {
-                memberFound = true;
-                ue.setMessageCount(ue.getMessageCount() + 1);
-                break;
-            }
-        }
-        if (!memberFound) {
-            UsersEntity usersEntity = new UsersEntity();
-            usersEntity.setMemberId(event.getMember().getIdLong());
-            usersEntity.setMessageCount(1);
-            session.save(usersEntity);
-        }
-        session.getTransaction().commit();
-        session.close();
 
         String messageTextRaw = event.getMessage().getContentRaw();
 
