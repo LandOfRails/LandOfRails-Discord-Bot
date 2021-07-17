@@ -3,6 +3,8 @@ package handler;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
 import model.ServerState;
 import model.database.PollsEntity;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -191,6 +193,15 @@ public class TimerTasks {
         long delay = 1000L;
         long period = 1000L * 10L;
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
+    }
+
+    public void checkForNewApplications(String token) {
+        HttpResponse<String> response = Unirest.get("https://api.trello.com/1/boards/5f935072cd736855c2d86bef/cards")
+                .queryString("key", "0884301f0b89d4de4d97337ca8f02f06")
+                .queryString("token", token)
+                .asString();
+
+        System.out.println(response.getBody());
     }
 
     private List<ServerState> getStatesList() {

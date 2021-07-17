@@ -65,6 +65,7 @@ public class Main implements EventListener {
         TimerTasks tt = new TimerTasks();
         tt.checkActiveVotings();
         tt.updateStatus();
+//        tt.checkForNewApplications(sensitiveDataSplitted[3]);
 
         // JadenNotificater starten
         JadenNotificater.init();

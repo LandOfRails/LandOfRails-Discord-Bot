@@ -58,7 +58,7 @@ public class CommandAbstimmung implements Command {
                     embedBuilder.setColor(Color.YELLOW);
                     embedBuilder.setDescription("\uD83D\uDC4D Ja! \n \n \uD83D\uDC4E Nein! \n \n :fist: Mir egal...");
 
-                    event.getGuild().getTextChannelById(485879824540499969L).sendMessage(embedBuilder.build())
+                    event.getGuild().getTextChannelById(485879824540499969L).sendMessageEmbeds(embedBuilder.build())
                             .queue(message -> {
                                 message.addReaction("U+1F44D").queue();
                                 message.addReaction("U+1F44E").queue();
