@@ -124,13 +124,10 @@ public class Modpack {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Modpack)) {
-            return false;
-        } else {
+        if (obj instanceof Modpack) {
             Modpack modpack = (Modpack) obj;
-            if (!Shortcut.equalsIgnoreCase(modpack.getShortcut()) && !Title.equalsIgnoreCase(modpack.getTitle()) && !Name.equalsIgnoreCase(modpack.getName()) && Organisation != modpack.Organisation)
-                return false;
-            return true;
+            return Shortcut.equalsIgnoreCase(modpack.getShortcut()) || Title.equalsIgnoreCase(modpack.getTitle()) || Name.equalsIgnoreCase(modpack.getName()) || Organisation == modpack.Organisation;
         }
+        return false;
     }
 }
