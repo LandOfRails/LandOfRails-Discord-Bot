@@ -244,3 +244,4 @@ tokens/
 .idea/discord.xml
 tokens/StoredCredential
 hibernate.cfg.xml
+gradle_password

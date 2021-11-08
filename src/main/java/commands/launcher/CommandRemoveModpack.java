@@ -44,7 +44,7 @@ public class CommandRemoveModpack implements Command {
 
             for (Modpack m : modpackList) {
                 if (m.getShortcut().equalsIgnoreCase(args[1])) {
-                    event.getChannel().sendMessage("Bitte bestätige dass du das Modpack \"" + m.getTitle() + "\" wirklich löschen möchtest.").queue(message -> {
+                    event.getChannel().sendMessage("Bitte bestÃ¤tige dass du das Modpack \"" + m.getTitle() + "\" wirklich lÃ¶schen mÃ¶chtest.").queue(message -> {
                         Container.modpackDeletionList.add(new Triple<>(message, event.getMember().getIdLong(), m));
                         message.addReaction("U+2705").queue();
                         message.addReaction("U+274C").queue();
