@@ -177,7 +177,7 @@ public class TimerTasks {
                         case "0f67780a-465c-4139-9e51-17a4639ddbc0":
                             if (!stateRTM.equals(tempState)) {
                                 stateRTM = tempState;
-                                Container.getGuild().getVoiceChannelById(806319668344127538L).getManager().setName("RTM: team only (" + tempState + ")").queue();
+                                Container.getGuild().getVoiceChannelById(806319668344127538L).getManager().setName("RTM: "+ tempState).queue();
                             }
                             break;
 
