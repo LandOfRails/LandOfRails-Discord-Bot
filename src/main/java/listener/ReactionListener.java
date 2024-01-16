@@ -51,6 +51,8 @@ public class ReactionListener extends ListenerAdapter {
             put("U+1f1e6", 744099514088030209L);
             //LandOfSignals
             put("U+1f1f1", 797155560725676052L);
+            //Create
+            put("U+1f1e8", 1196944399322583090L);
         }});
 
         //O T H E R
@@ -150,12 +152,12 @@ public class ReactionListener extends ListenerAdapter {
             lmr = event.getTextChannel().retrieveMessageById(712375636009943070L).complete().getReactions();
             String codepoints = event.getReactionEmote().getAsCodepoints();
             HashMap<String, Long> roles = rolesList.get(messageID);
-            updateIR();
-            updateOpenTTD();
-            updateRTM();
-            updateTC();
-            updateZnD();
-            updateTTT();
+//            updateIR();
+//            updateOpenTTD();
+//            updateRTM();
+//            updateTC();
+//            updateZnD();
+//            updateTTT();
             if (roles.containsKey(codepoints)) {
                 event.getGuild().addRoleToMember(member, event.getGuild().getRoleById(roles.get(codepoints))).complete();
             }
@@ -229,12 +231,12 @@ public class ReactionListener extends ListenerAdapter {
             lmr = event.getTextChannel().retrieveMessageById(712375636009943070L).complete().getReactions();
             String codepoints = event.getReactionEmote().getAsCodepoints();
             HashMap<String, Long> roles = rolesList.get(messageID);
-            updateIR();
-            updateOpenTTD();
-            updateRTM();
-            updateTC();
-            updateZnD();
-            updateTTT();
+//            updateIR();
+//            updateOpenTTD();
+//            updateRTM();
+//            updateTC();
+//            updateZnD();
+//            updateTTT();
             if (roles.containsKey(codepoints)) {
                 event.getGuild().removeRoleFromMember(member, event.getGuild().getRoleById(roles.get(codepoints))).complete();
             }
@@ -273,7 +275,7 @@ public class ReactionListener extends ListenerAdapter {
                                     }
                                 }
                                 if (!roleFound) g.addRoleToMember(mb, g.getRoleById(roleID)).queue();
-                            } catch (Exception e) {
+                            } catch (Exception ignored) {
 
                             }
                         }

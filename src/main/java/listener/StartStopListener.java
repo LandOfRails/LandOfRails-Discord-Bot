@@ -18,6 +18,7 @@ public class StartStopListener extends ListenerAdapter {
 
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
+        System.out.println("Readyyy");
         Container.setGuild(event.getJDA().getGuildById(394112479283904512L));
         ReactionListener.checkIfReacted();
         ReactionListener.checkIfUsersGotRole();

@@ -38,8 +38,8 @@ public class Main implements EventListener {
         String[] sensitiveDataSplitted = sensitiveData.split(" ");
 
         // Google sheets stuff
-        Container.sheetsService = GoogleAuthorizeUtil.getSheetsService();
-        Container.spreadsheetId = sensitiveDataSplitted[2];
+//        Container.sheetsService = GoogleAuthorizeUtil.getSheetsService();
+//        Container.spreadsheetId = sensitiveDataSplitted[2];
 
         // Init Discord Bot
         String token = sensitiveDataSplitted[0];
